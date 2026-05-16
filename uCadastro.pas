@@ -4,14 +4,19 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls;
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ComCtrls, Vcl.ExtCtrls;
 
 type
   TfrmRegistro = class(TForm)
-    edtUser: TEdit;
-    edtPassword: TEdit;
-    edtConfirmPassword: TEdit;
+    pnlCardCadastro: TPanel;
     btnSalvar: TButton;
+    edtConfirmPassword: TEdit;
+    edtPassword: TEdit;
+    edtUser: TEdit;
+    lblNewUser: TLabel;
+    StaticText2: TStaticText;
+    StaticText3: TStaticText;
+    StaticText1: TStaticText;
     procedure btnSalvarClick(Sender: TObject);
   private
     { Private declarations }
@@ -34,6 +39,7 @@ begin
   begin
     ShowMessage('Por favor, preencha o usuário e a senha!');
     edtUser.SetFocus;
+    Exit;
   end;
 
   if (edtPassword.Text <> edtConfirmPassword.Text) then
@@ -67,5 +73,11 @@ begin
 
 
 end;
+
+
+
+
+
+
 
 end.

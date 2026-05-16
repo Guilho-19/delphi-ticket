@@ -1,0 +1,73 @@
+object frmRegistro: TfrmRegistro
+  Left = 0
+  Top = 0
+  Caption = 'Novo Usu'#225'rio'
+  ClientHeight = 211
+  ClientWidth = 184
+  Color = clLightgray
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -13
+  Font.Name = 'Segoe UI'
+  Font.Style = []
+  TextHeight = 17
+  object pnlCardCadastro: TPanel
+    Left = -5
+    Top = -16
+    Width = 493
+    Height = 480
+    BevelOuter = bvNone
+    Color = clWhite
+    ParentBackground = False
+    TabOrder = 0
+    object lblNewUser: TLabel
+      Left = 26
+      Top = 35
+      Width = 121
+      Height = 28
+      Alignment = taCenter
+      Caption = 'Novo Usu'#225'rio'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -20
+      Font.Name = 'Segoe UI'
+      Font.Style = []
+      ParentFont = False
+    end
+    object btnSalvar: TButton
+      Left = 26
+      Top = 162
+      Width = 75
+      Height = 35
+      Caption = 'Salvar'
+      TabOrder = 0
+      OnClick = btnSalvarClick
+    end
+    object edtConfirmPassword: TEdit
+      Left = 26
+      Top = 131
+      Width = 111
+      Height = 25
+      PasswordChar = '*'
+      TabOrder = 1
+      TextHint = 'Confirmar Senha'
+    end
+    object edtPassword: TEdit
+      Left = 26
+      Top = 100
+      Width = 111
+      Height = 25
+      PasswordChar = '*'
+      TabOrder = 2
+      TextHint = 'Senha'
+    end
+    object edtUser: TEdit
+      Left = 26
+      Top = 69
+      Width = 111
+      Height = 25
+      TabOrder = 3
+      TextHint = 'Usu'#225'rio'
+    end
+  end
+end

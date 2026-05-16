@@ -1,0 +1,78 @@
+unit uCadastro;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ComCtrls, Vcl.ExtCtrls;
+
+type
+  TfrmRegistro = class(TForm)
+    pnlCardCadastro: TPanel;
+    btnSalvar: TButton;
+    edtConfirmPassword: TEdit;
+    edtPassword: TEdit;
+    edtUser: TEdit;
+    lblNewUser: TLabel;
+    Label1: TLabel;
+    procedure btnSalvarClick(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  frmRegistro: TfrmRegistro;
+
+implementation
+
+{$R *.dfm}
+
+uses uDMConexao;
+
+procedure TfrmRegistro.btnSalvarClick(Sender: TObject);
+begin
+  if (Trim(edtUser.Text) = '') or (Trim(edtPassword.Text) = '') then
+  begin
+    ShowMessage('Por favor, preencha o usuário e a senha!');
+    edtUser.SetFocus;
+    Exit;
+  end;
+
+  if (edtPassword.Text <> edtConfirmPassword.Text) then
+  begin
+    ShowMessage('As senhas digitadas devem ser iguais');
+    edtConfirmPassword.Clear;
+    edtConfirmPassword.SetFocus;
+    Exit;
+  end;
+
+  dmConexao.qryExec.Close;
+  dmConexao.qryExec.SQL.Clear;
+  dmConexao.qryExec.SQL.Add('insert into Users (username, password, role) values (:pUsername, :pPassword, ''NORMAL'')');
+
+  dmConexao.qryExec.Parameters.ParamByName('pUsername').Value := Trim(edtUser.Text);
+  dmConexao.qryExec.Parameters.ParamByName('pPassword').Value := Trim(edtPassword.Text);
+
+  try
+    dmConexao.qryExec.ExecSQL;
+
+    ShowMessage('Usuário cadastrado com sucesso!');
+    ModalResult := mrOk;
+
+    except
+      on E: Exception do
+      begin
+        ShowMessage('Erro ao salvar no banco de dados: ' + E.Message);
+      end;
+  end;
+
+
+
+end;
+
+
+
+
+end.

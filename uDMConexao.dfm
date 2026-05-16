@@ -1,6 +1,6 @@
 object dmConexao: TdmConexao
   Height = 246
-  Width = 257
+  Width = 209
   object DataSource1: TDataSource
     DataSet = qryTickets
     Left = 40
@@ -47,18 +47,18 @@ object dmConexao: TdmConexao
     LoginPrompt = False
     Provider = 'SQLOLEDB.1'
     Left = 80
-    Top = 120
+    Top = 104
   end
   object qryLogin: TADOQuery
     Connection = ADOConnection1
     Parameters = <>
     Left = 120
-    Top = 120
+    Top = 104
   end
   object qryExec: TADOQuery
     Connection = ADOConnection1
     Parameters = <>
     Left = 120
-    Top = 192
+    Top = 176
   end
 end
