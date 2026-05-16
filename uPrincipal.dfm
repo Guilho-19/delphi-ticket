@@ -10,13 +10,15 @@ object frmPrincipal: TfrmPrincipal
   Font.Height = -12
   Font.Name = 'Segoe UI'
   Font.Style = []
+  Position = poDesigned
   TextHeight = 15
   object DBGrid1: TDBGrid
     Left = 8
     Top = 96
     Width = 833
     Height = 352
-    DataSource = DataSource1
+    DataSource = dmConexao.DataSource1
+    ReadOnly = True
     TabOrder = 0
     TitleFont.Charset = DEFAULT_CHARSET
     TitleFont.Color = clWindowText
@@ -83,38 +85,49 @@ object frmPrincipal: TfrmPrincipal
     TabOrder = 1
     OnClick = btnRefreshClick
   end
-  object ADOQuery2: TADOQuery
-    Connection = ADOConnection1
-    CursorType = ctStatic
-    Parameters = <>
-    SQL.Strings = (
-      'select '
-      
-        '    id, responsible as Responsavel, title as Titulo, type as Mod' +
-        'ulo, '
-      
-        '    requester as empresa, priority as Prioridade, columnId as St' +
-        'atus, '
-      '    createdAt as Data'
-      'from Tickets'
-      'order by Data desc')
-    Left = 752
-    Top = 11
+  object edtPesquisaTicketsID: TEdit
+    Left = 8
+    Top = 67
+    Width = 121
+    Height = 23
+    TabOrder = 2
+    TextHint = 'ID'
+    OnChange = edtPesquisaTicketsIDChange
   end
-  object ADOConnection1: TADOConnection
-    Connected = True
-    ConnectionString = 
-      'Provider=SQLOLEDB.1;Integrated Security=SSPI;Persist Security In' +
-      'fo=False;User ID=sa;Initial Catalog=TicketSupportDB;Data Source=' +
-      'DESKTOP-IMACRFG'
-    LoginPrompt = False
-    Provider = 'SQLOLEDB.1'
-    Left = 712
-    Top = 12
+  object edtPesquisaTicketsResponsavel: TEdit
+    Left = 135
+    Top = 67
+    Width = 121
+    Height = 23
+    TabOrder = 3
+    TextHint = 'Respons'#225'vel'
+    OnChange = edtPesquisaTicketsResponsavelChange
   end
-  object DataSource1: TDataSource
-    DataSet = ADOQuery2
-    Left = 672
-    Top = 11
+  object edtPesquisaTicketsTitulo: TEdit
+    Left = 262
+    Top = 67
+    Width = 121
+    Height = 23
+    TabOrder = 4
+    TextHint = 'T'#237'tulo'
+    OnChange = edtPesquisaTicketsTituloChange
+  end
+  object edtPesquisaTicketsEmpresa: TEdit
+    Left = 389
+    Top = 67
+    Width = 121
+    Height = 23
+    TabOrder = 5
+    TextHint = 'Empresa'
+    OnChange = edtPesquisaTicketsEmpresaChange
+  end
+  object edtPesquisaTicketsModulo: TEdit
+    Left = 516
+    Top = 67
+    Width = 121
+    Height = 23
+    TabOrder = 6
+    TextHint = 'Modulo'
+    OnChange = edtPesquisaTicketsModuloChange
   end
 end

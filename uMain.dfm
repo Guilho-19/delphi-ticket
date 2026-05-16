@@ -23,6 +23,7 @@ object frmLogin: TfrmLogin
     Top = 110
     Width = 121
     Height = 23
+    PasswordChar = '*'
     TabOrder = 1
   end
   object StaticText1: TStaticText
@@ -58,28 +59,13 @@ object frmLogin: TfrmLogin
     TabOrder = 5
     OnClick = btnLoginClick
   end
-  object Button2: TButton
+  object btnSignUp: TButton
     Left = 134
     Top = 158
     Width = 75
     Height = 24
     Caption = 'Registrar'
     TabOrder = 6
-  end
-  object ADOConnection1: TADOConnection
-    ConnectionString = 
-      'Provider=SQLOLEDB.1;Integrated Security=SSPI;Persist Security In' +
-      'fo=False;User ID=sa;Initial Catalog=TicketSupportDB;Data Source=' +
-      'DESKTOP-IMACRFG'
-    LoginPrompt = False
-    Provider = 'SQLOLEDB.1'
-    Left = 608
-    Top = 464
-  end
-  object ADOQuery1: TADOQuery
-    Connection = ADOConnection1
-    Parameters = <>
-    Left = 568
-    Top = 464
+    OnClick = btnSignUpClick
   end
 end

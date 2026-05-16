@@ -1,0 +1,58 @@
+object dmConexao: TdmConexao
+  Height = 246
+  Width = 257
+  object DataSource1: TDataSource
+    DataSet = qryTickets
+    Left = 40
+    Top = 35
+  end
+  object qryTickets: TADOQuery
+    Connection = ADOConnection2
+    CursorType = ctStatic
+    Parameters = <>
+    SQL.Strings = (
+      'select '
+      
+        '    id, responsible as Responsavel, title as Titulo, type as Mod' +
+        'ulo, '
+      
+        '    requester as empresa, priority as Prioridade, columnId as St' +
+        'atus, '
+      '    createdAt as Data'
+      'from Tickets'
+      'order by Data desc')
+    Left = 120
+    Top = 35
+  end
+  object ADOConnection2: TADOConnection
+    ConnectionString = 
+      'Provider=SQLOLEDB.1;Integrated Security=SSPI;Persist Security In' +
+      'fo=False;User ID=sa;Initial Catalog=TicketSupportDB;Data Source=' +
+      'DESKTOP-IMACRFG;Use Procedure for Prepare=1;Auto Translate=True;' +
+      'Packet Size=4096;Workstation ID=DESKTOP-IMACRFG;Use Encryption f' +
+      'or Data=False;Tag with column collation when possible=False'
+    LoginPrompt = False
+    Provider = 'SQLOLEDB.1'
+    Left = 80
+    Top = 36
+  end
+  object ADOConnection1: TADOConnection
+    Connected = True
+    ConnectionString = 
+      'Provider=SQLOLEDB.1;Integrated Security=SSPI;Persist Security In' +
+      'fo=False;User ID=sa;Initial Catalog=TicketSupportDB;Data Source=' +
+      'DESKTOP-IMACRFG;Use Procedure for Prepare=1;Auto Translate=True;' +
+      'Packet Size=4096;Workstation ID=DESKTOP-IMACRFG;Use Encryption f' +
+      'or Data=False;Tag with column collation when possible=False'
+    LoginPrompt = False
+    Provider = 'SQLOLEDB.1'
+    Left = 80
+    Top = 120
+  end
+  object qryLogin: TADOQuery
+    Connection = ADOConnection1
+    Parameters = <>
+    Left = 120
+    Top = 120
+  end
+end

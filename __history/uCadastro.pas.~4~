@@ -1,0 +1,52 @@
+unit uCadastro;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls;
+
+type
+  TfrmRegistro = class(TForm)
+    edtUser: TEdit;
+    edtPassword: TEdit;
+    edtConfirmPassword: TEdit;
+    btnSalvar: TButton;
+    procedure btnSalvarClick(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  frmRegistro: TfrmRegistro;
+
+implementation
+
+{$R *.dfm}
+
+uses uDMConexao;
+
+procedure TfrmRegistro.btnSalvarClick(Sender: TObject);
+begin
+  if (Trim(edtUser.Text) = '') or (Trim(edtPassword.Text) = '') then
+  begin
+    ShowMessage('Por favor, preencha o usuário e a senha!');
+    edtUser.SetFocus;
+  end;
+
+  if (edtPassword.Text <> edtConfirmPassword.Text) then
+  begin
+    ShowMessage('As senhas digitadas devem ser iguais');
+    edtConfirmPassword.Clear;
+    edtConfirmPassword.SetFocus;
+    Exit;
+  end;
+
+
+
+
+end;
+
+end.

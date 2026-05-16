@@ -9,14 +9,21 @@ uses
 
 type
   TfrmPrincipal = class(TForm)
-    ADOQuery2: TADOQuery;
-    ADOConnection1: TADOConnection;
-    DataSource1: TDataSource;
     DBGrid1: TDBGrid;
     btnRefresh: TButton;
+    edtPesquisaTicketsID: TEdit;
+    edtPesquisaTicketsResponsavel: TEdit;
+    edtPesquisaTicketsTitulo: TEdit;
+    edtPesquisaTicketsEmpresa: TEdit;
+    edtPesquisaTicketsModulo: TEdit;
     procedure btnRefreshClick(Sender: TObject);
     procedure DBGrid1DrawColumnCell(Sender: TObject; const Rect: TRect;
       DataCol: Integer; Column: TColumn; State: TGridDrawState);
+    procedure edtPesquisaTicketsIDChange(Sender: TObject);
+    procedure edtPesquisaTicketsResponsavelChange(Sender: TObject);
+    procedure edtPesquisaTicketsTituloChange(Sender: TObject);
+    procedure edtPesquisaTicketsEmpresaChange(Sender: TObject);
+    procedure edtPesquisaTicketsModuloChange(Sender: TObject);
   private
     { Private declarations }
   public
@@ -30,10 +37,12 @@ implementation
 
 {$R *.dfm}
 
+uses uDMConexao;
+
 procedure TfrmPrincipal.btnRefreshClick(Sender: TObject);
 begin
-  ADOQuery2.SQL.Text := 'select id, responsible as Responsavel, title as Titulo, type as Modulo, requester as empresa, priority as Prioridade, columnId as Status, createdAt as Data from Tickets order by Data desc';
-  ADOQuery2.Open;
+  dmConexao.qryTickets.SQL.Text := 'select id, responsible as Responsavel, title as Titulo, type as Modulo, requester as empresa, priority as Prioridade, columnId as Status, createdAt as Data from Tickets order by Data desc';
+  dmConexao.qryTickets.Open;
 end;
 
 procedure TfrmPrincipal.DBGrid1DrawColumnCell(Sender: TObject;
@@ -51,5 +60,64 @@ begin
 end;
 
 
+procedure TfrmPrincipal.edtPesquisaTicketsIDChange(Sender: TObject);
+begin
+  if Trim(edtPesquisaTicketsID.Text) = '' then
+  begin
+    dmConexao.qryTickets.Filtered := False;
+    Exit;
+  end;
+
+  dmConexao.qryTickets.Filter := 'id like ' + QuotedStr('*' + edtPesquisaTicketsID.Text + '*');
+  dmConexao.qryTickets.Filtered := True;
+end;
+
+procedure TfrmPrincipal.edtPesquisaTicketsResponsavelChange(Sender: TObject);
+begin
+  if Trim(edtPesquisaTicketsResponsavel.Text) = '' then
+  begin
+    dmConexao.qryTickets.Filtered := False;
+    Exit;
+  end;
+
+  dmConexao.qryTickets.Filter := 'responsavel like ' + QuotedStr('%' + edtPesquisaTicketsResponsavel.Text + '%');
+  dmConexao.qryTickets.Filtered := True;
+end;
+
+procedure TfrmPrincipal.edtPesquisaTicketsTituloChange(Sender: TObject);
+begin
+  if Trim(edtPesquisaTicketsTitulo.Text) = '' then
+  begin
+    dmConexao.qryTickets.Filtered := False;
+    Exit;
+  end;
+
+  dmConexao.qryTickets.Filter := 'titulo like ' + QuotedStr('%' + edtPesquisaTicketsTitulo.Text + '%');
+  dmConexao.qryTickets.Filtered := True;
+end;
+
+procedure TfrmPrincipal.edtPesquisaTicketsModuloChange(Sender: TObject);
+begin
+  if Trim(edtPesquisaTicketsModulo.Text) = '' then
+  begin
+    dmConexao.qryTickets.Filtered := False;
+    Exit;
+  end;
+
+  dmConexao.qryTickets.Filter := 'modulo like ' + QuotedStr('%' + edtPesquisaTicketsModulo.Text + '%');
+  dmConexao.qryTickets.Filtered := True;
+end;
+
+procedure TfrmPrincipal.edtPesquisaTicketsEmpresaChange(Sender: TObject);
+begin
+  if Trim(edtPesquisaTicketsEmpresa.Text) = '' then
+  begin
+    dmConexao.qryTickets.Filtered := False;
+    Exit;
+  end;
+
+  dmConexao.qryTickets.Filter := 'empresa like ' + QuotedStr('%' + edtPesquisaTicketsEmpresa.Text + '%');
+  dmConexao.qryTickets.Filtered := True;
+end;
 
 end.

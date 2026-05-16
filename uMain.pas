@@ -4,24 +4,19 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, FireDAC.Stan.Intf, FireDAC.Stan.Option,
-  FireDAC.Stan.Error, FireDAC.UI.Intf, FireDAC.Phys.Intf, FireDAC.Stan.Def,
-  FireDAC.Stan.Pool, FireDAC.Stan.Async, FireDAC.Phys, FireDAC.Phys.MySQLDef,
-  FireDAC.VCLUI.Wait, FireDAC.Comp.UI, FireDAC.Phys.MySQL, Data.DB,
-  FireDAC.Comp.Client, Data.Win.ADODB, Vcl.StdCtrls;
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls;
 
 type
   TfrmLogin = class(TForm)
-    ADOConnection1: TADOConnection;
     edtUser: TEdit;
     edtPassword: TEdit;
     StaticText1: TStaticText;
     StaticText2: TStaticText;
     StaticText3: TStaticText;
     btnLogin: TButton;
-    Button2: TButton;
-    ADOQuery1: TADOQuery;
+    btnSignUp: TButton;
     procedure btnLoginClick(Sender: TObject);
+    procedure btnSignUpClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -35,7 +30,7 @@ implementation
 
 {$R *.dfm}
 
-uses uPrincipal;
+uses uPrincipal, uDMConexao, uCadastro;
 
 procedure TfrmLogin.btnLoginClick(Sender: TObject);
 begin
@@ -44,11 +39,11 @@ begin
       ShowMessage('O usuário e senha precisam ser preenchidos!');
     end;
 
-  ADOQuery1.SQL.Text := 'select Password from Users where Username = :pUsername';
-  ADOQuery1.Parameters.ParamByName('pUsername').Value := edtUser.Text;
+  dmConexao.qryLogin.SQL.Text := 'select Password from Users where Username = :pUsername';
+  dmConexao.qryLogin.Parameters.ParamByName('pUsername').Value := edtUser.Text;
 
   try
-    ADOQuery1.Open;
+    dmConexao.qryLogin.Open;
     except
       on E: Exception do
       begin
@@ -57,14 +52,14 @@ begin
       end;
   end;
 
-  if ADOQuery1.IsEmpty then
+  if dmConexao.qryLogin.IsEmpty then
   begin
     ShowMessage('Usuário não cadastrado!');
     edtUser.SetFocus;
   end
   else
   begin
-    if ADOQuery1.FieldByName('Password').AsString = edtPassword.Text then
+    if dmConexao.qryLogin.FieldByName('Password').AsString = edtPassword.Text then
     begin
       ShowMessage('Loggado com Sucesso!');
       frmPrincipal.Show;
@@ -79,6 +74,11 @@ begin
   end;
 
 
+end;
+
+procedure TfrmLogin.btnSignUpClick(Sender: TObject);
+begin
+  frmRegistro.ShowModal;
 end;
 
 end.

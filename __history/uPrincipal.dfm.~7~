@@ -1,0 +1,139 @@
+object frmPrincipal: TfrmPrincipal
+  Left = 0
+  Top = 0
+  Caption = 'frmPrincipal'
+  ClientHeight = 462
+  ClientWidth = 851
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -12
+  Font.Name = 'Segoe UI'
+  Font.Style = []
+  TextHeight = 15
+  object DBGrid1: TDBGrid
+    Left = 8
+    Top = 96
+    Width = 833
+    Height = 352
+    DataSource = DataSource1
+    ReadOnly = True
+    TabOrder = 0
+    TitleFont.Charset = DEFAULT_CHARSET
+    TitleFont.Color = clWindowText
+    TitleFont.Height = -12
+    TitleFont.Name = 'Segoe UI'
+    TitleFont.Style = []
+    OnDrawColumnCell = DBGrid1DrawColumnCell
+    Columns = <
+      item
+        Expanded = False
+        FieldName = 'id'
+        Width = 50
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'Responsavel'
+        Width = 75
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'Titulo'
+        Width = 250
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'Modulo'
+        Width = 90
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'empresa'
+        Width = 100
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'Prioridade'
+        Width = 65
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'Status'
+        Width = 70
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'Data'
+        Width = 90
+        Visible = True
+      end>
+  end
+  object btnRefresh: TButton
+    Left = 8
+    Top = 32
+    Width = 75
+    Height = 25
+    Caption = '&Atualizar'
+    TabOrder = 1
+    OnClick = btnRefreshClick
+  end
+  object edtPesquisaTicketsID: TEdit
+    Left = 8
+    Top = 67
+    Width = 121
+    Height = 23
+    TabOrder = 2
+    TextHint = 'ID'
+    OnChange = edtPesquisaTicketsIDChange
+  end
+  object edtPesquisaTicketsResponsavel: TEdit
+    Left = 135
+    Top = 67
+    Width = 121
+    Height = 23
+    TabOrder = 3
+    TextHint = 'Respons'#225'vel'
+    OnChange = edtPesquisaTicketsResponsavelChange
+  end
+  object ADOQuery2: TADOQuery
+    Connection = ADOConnection1
+    CursorType = ctStatic
+    Parameters = <>
+    SQL.Strings = (
+      'select '
+      
+        '    id, responsible as Responsavel, title as Titulo, type as Mod' +
+        'ulo, '
+      
+        '    requester as empresa, priority as Prioridade, columnId as St' +
+        'atus, '
+      '    createdAt as Data'
+      'from Tickets'
+      'order by Data desc')
+    Left = 728
+    Top = 19
+  end
+  object ADOConnection1: TADOConnection
+    Connected = True
+    ConnectionString = 
+      'Provider=SQLOLEDB.1;Integrated Security=SSPI;Persist Security In' +
+      'fo=False;User ID=sa;Initial Catalog=TicketSupportDB;Data Source=' +
+      'DESKTOP-IMACRFG'
+    LoginPrompt = False
+    Provider = 'SQLOLEDB.1'
+    Left = 688
+    Top = 20
+  end
+  object DataSource1: TDataSource
+    DataSet = ADOQuery2
+    Left = 640
+    Top = 19
+  end
+end

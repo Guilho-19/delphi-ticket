@@ -1,0 +1,110 @@
+unit uPrincipal;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, uMain, Data.DB, Data.Win.ADODB,
+  Vcl.Grids, Vcl.DBGrids, Vcl.StdCtrls;
+
+type
+  TfrmPrincipal = class(TForm)
+    ADOQuery2: TADOQuery;
+    ADOConnection1: TADOConnection;
+    DataSource1: TDataSource;
+    DBGrid1: TDBGrid;
+    btnRefresh: TButton;
+    edtPesquisaTicketsID: TEdit;
+    edtPesquisaTicketsResponsavel: TEdit;
+    edtPesquisaTicketsTitulo: TEdit;
+    edtPesquisaTicketsEmpresa: TEdit;
+    procedure btnRefreshClick(Sender: TObject);
+    procedure DBGrid1DrawColumnCell(Sender: TObject; const Rect: TRect;
+      DataCol: Integer; Column: TColumn; State: TGridDrawState);
+    procedure edtPesquisaTicketsIDChange(Sender: TObject);
+    procedure edtPesquisaTicketsResponsavelChange(Sender: TObject);
+    procedure edtPesquisaTicketsTituloChange(Sender: TObject);
+    procedure edtPesquisaTicketsEmpresaChange(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  frmPrincipal: TfrmPrincipal;
+
+implementation
+
+{$R *.dfm}
+
+procedure TfrmPrincipal.btnRefreshClick(Sender: TObject);
+begin
+  ADOQuery2.SQL.Text := 'select id, responsible as Responsavel, title as Titulo, type as Modulo, requester as empresa, priority as Prioridade, columnId as Status, createdAt as Data from Tickets order by Data desc';
+  ADOQuery2.Open;
+end;
+
+procedure TfrmPrincipal.DBGrid1DrawColumnCell(Sender: TObject;
+  const Rect: TRect; DataCol: Integer; Column: TColumn;
+  State: TGridDrawState);
+begin
+  begin
+    if not (gdSelected in State) then
+      if (DBGrid1.DataSource.DataSet.RecNo mod 2 = 0) then
+        DBGrid1.Canvas.Brush.Color := clWhite
+      else
+        DBGrid1.Canvas.Brush.Color := $00F5F5F5;
+  end;
+  DBGrid1.DefaultDrawColumnCell(Rect, DataCol, Column, State);
+end;
+
+
+procedure TfrmPrincipal.edtPesquisaTicketsIDChange(Sender: TObject);
+begin
+  if Trim(edtPesquisaTicketsID.Text) = '' then
+  begin
+    ADOQuery2.Filtered := False;
+    Exit;
+  end;
+
+  ADOQuery2.Filter := 'id like ' + QuotedStr('*' + edtPesquisaTicketsID.Text + '*');
+  ADOQuery2.Filtered := True;
+end;
+
+procedure TfrmPrincipal.edtPesquisaTicketsResponsavelChange(Sender: TObject);
+begin
+  if Trim(edtPesquisaTicketsResponsavel.Text) = '' then
+  begin
+    ADOQuery2.Filtered := False;
+    Exit
+  end;
+
+  ADOQuery2.Filter := 'responsavel like ' + QuotedStr('%' + edtPesquisaTicketsResponsavel.Text + '%');
+  ADOQuery2.Filtered := True;
+end;
+
+procedure TfrmPrincipal.edtPesquisaTicketsTituloChange(Sender: TObject);
+begin
+  if Trim(edtPesquisaTicketsTitulo.Text) = '' then
+  begin
+    ADOQuery2.Filtered := False;
+    Exit
+  end;
+
+  ADOQuery2.Filter := 'titulo like ' + QuotedStr('%' + edtPesquisaTicketsTitulo.Text + '%');
+  ADOQuery2.Filtered := True;
+end;
+
+procedure TfrmPrincipal.edtPesquisaTicketsEmpresaChange(Sender: TObject);
+begin
+  if Trim(edtPesquisaTicketsEmpresa.Text) = '' then
+  begin
+    ADOQuery2.Filtered := False;
+    Exit
+  end;
+
+  ADOQuery2.Filter := 'empresa like ' + QuotedStr('%' + edtPesquisaTicketsEmpresa.Text + '%');
+  ADOQuery2.Filtered := True;
+end;
+
+end.
