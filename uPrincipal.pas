@@ -5,17 +5,20 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, uMain, Data.DB, Data.Win.ADODB,
-  Vcl.Grids, Vcl.DBGrids, Vcl.StdCtrls;
+  Vcl.Grids, Vcl.DBGrids, Vcl.StdCtrls, Vcl.ExtCtrls, Vcl.ComCtrls;
 
 type
   TfrmPrincipal = class(TForm)
-    DBGrid1: TDBGrid;
+    TabControl1: TTabControl;
+    pnlDashboard: TPanel;
+    pnlListaChamados: TPanel;
     btnRefresh: TButton;
+    DBGrid1: TDBGrid;
+    edtPesquisaTicketsEmpresa: TEdit;
     edtPesquisaTicketsID: TEdit;
+    edtPesquisaTicketsModulo: TEdit;
     edtPesquisaTicketsResponsavel: TEdit;
     edtPesquisaTicketsTitulo: TEdit;
-    edtPesquisaTicketsEmpresa: TEdit;
-    edtPesquisaTicketsModulo: TEdit;
     procedure btnRefreshClick(Sender: TObject);
     procedure DBGrid1DrawColumnCell(Sender: TObject; const Rect: TRect;
       DataCol: Integer; Column: TColumn; State: TGridDrawState);
@@ -24,6 +27,7 @@ type
     procedure edtPesquisaTicketsTituloChange(Sender: TObject);
     procedure edtPesquisaTicketsEmpresaChange(Sender: TObject);
     procedure edtPesquisaTicketsModuloChange(Sender: TObject);
+    procedure TabControl1Change(Sender: TObject);
   private
     { Private declarations }
   public
@@ -94,6 +98,14 @@ begin
 
   dmConexao.qryTickets.Filter := 'titulo like ' + QuotedStr('%' + edtPesquisaTicketsTitulo.Text + '%');
   dmConexao.qryTickets.Filtered := True;
+end;
+
+procedure TfrmPrincipal.TabControl1Change(Sender: TObject);
+begin
+  pnlDashboard.Visible := (TabControl1.TabIndex = 0);
+  pnlListaChamados.Visible := (TabControl1.TabIndex = 1);
+
+
 end;
 
 procedure TfrmPrincipal.edtPesquisaTicketsModuloChange(Sender: TObject);
