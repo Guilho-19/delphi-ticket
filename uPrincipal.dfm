@@ -25,19 +25,6 @@ object frmPrincipal: TfrmPrincipal
       'Configura'#231#245'es')
     TabIndex = 0
     OnChange = TabControl1Change
-    object pnlDashboard: TPanel
-      Left = 4
-      Top = 26
-      Width = 843
-      Height = 432
-      Align = alClient
-      BevelOuter = bvNone
-      TabOrder = 0
-      ExplicitLeft = 294
-      ExplicitTop = 168
-      ExplicitWidth = 185
-      ExplicitHeight = 41
-    end
     object pnlListaChamados: TPanel
       Left = 4
       Top = 26
@@ -47,10 +34,8 @@ object frmPrincipal: TfrmPrincipal
       BevelOuter = bvNone
       TabOrder = 1
       Visible = False
-      ExplicitLeft = 274
-      ExplicitTop = 155
-      ExplicitWidth = 185
-      ExplicitHeight = 41
+      ExplicitLeft = 5
+      ExplicitTop = 27
       object btnRefresh: TButton
         Left = 8
         Top = 13
@@ -169,6 +154,52 @@ object frmPrincipal: TfrmPrincipal
         TabOrder = 6
         TextHint = 'T'#237'tulo'
         OnChange = edtPesquisaTicketsTituloChange
+      end
+    end
+    object pnlDashboard: TPanel
+      Left = 3
+      Top = 27
+      Width = 843
+      Height = 432
+      BevelOuter = bvNone
+      TabOrder = 0
+      object pnlCardAbertos: TPanel
+        Left = 221
+        Top = 296
+        Width = 200
+        Height = 100
+        BevelOuter = bvNone
+        Color = clWhite
+        ParentBackground = False
+        TabOrder = 0
+        object lblTituloAbertos: TLabel
+          Left = 0
+          Top = 5
+          Width = 200
+          Height = 25
+          Alignment = taCenter
+          Caption = 'Chamados Abertos'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -19
+          Font.Name = 'Segoe UI'
+          Font.Style = []
+          ParentFont = False
+        end
+        object lblValorAbertos: TLabel
+          Left = 0
+          Top = 34
+          Width = 200
+          Height = 75
+          Alignment = taCenter
+          Caption = '0'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -40
+          Font.Name = 'Segoe UI'
+          Font.Style = []
+          ParentFont = False
+        end
       end
     end
   end

@@ -19,6 +19,9 @@ type
     edtPesquisaTicketsModulo: TEdit;
     edtPesquisaTicketsResponsavel: TEdit;
     edtPesquisaTicketsTitulo: TEdit;
+    pnlCardAbertos: TPanel;
+    lblTituloAbertos: TLabel;
+    lblValorAbertos: TLabel;
     procedure btnRefreshClick(Sender: TObject);
     procedure DBGrid1DrawColumnCell(Sender: TObject; const Rect: TRect;
       DataCol: Integer; Column: TColumn; State: TGridDrawState);
