@@ -22,6 +22,12 @@ type
     pnlCardAbertos: TPanel;
     lblTituloAbertos: TLabel;
     lblValorAbertos: TLabel;
+    pnlCardConcluidos: TPanel;
+    lblTituloConcluidos: TLabel;
+    lblValorConcluidos: TLabel;
+    pnlCardTotal: TPanel;
+    lblTituloTotal: TLabel;
+    lblValorTotal: TLabel;
     procedure btnRefreshClick(Sender: TObject);
     procedure DBGrid1DrawColumnCell(Sender: TObject; const Rect: TRect;
       DataCol: Integer; Column: TColumn; State: TGridDrawState);
@@ -31,8 +37,10 @@ type
     procedure edtPesquisaTicketsEmpresaChange(Sender: TObject);
     procedure edtPesquisaTicketsModuloChange(Sender: TObject);
     procedure TabControl1Change(Sender: TObject);
+    procedure FormShow(Sender: TObject);
   private
     { Private declarations }
+    procedure AtualizarMetricasDashboard;
   public
     { Public declarations }
   end;
@@ -45,6 +53,25 @@ implementation
 {$R *.dfm}
 
 uses uDMConexao;
+
+procedure TfrmPrincipal.AtualizarMetricasDashboard;
+begin
+  dmConexao.qryDashboard.Close;
+  dmConexao.qryDashboard.SQL.Clear;
+
+  dmConexao.qryDashboard.SQL.Add('select count(id) as Total, count(case when columnId = ''Em Análise'' then 1 end) as Abertos, count(case when columnId = ''Finalizado'' then 1 end) as Concluídos from Tickets');
+
+  try
+    dmConexao.qryDashboard.Open;
+
+    lblValorTotal.Caption := IntToStr(dmConexao.qryDashboard.FieldByName('Total').AsInteger);
+    lblValorAbertos.Caption := IntToStr(dmConexao.qryDashboard.FieldByName('Abertos').AsInteger);
+    lblValorConcluidos.Caption := IntToStr(dmConexao.qryDashboard.FieldByName('Concluídos').AsInteger);
+  except
+    on E: Exception do
+      ShowMessage('Erro ao carregar métricas: ' + E.Message);
+  end;
+end;
 
 procedure TfrmPrincipal.btnRefreshClick(Sender: TObject);
 begin
@@ -103,12 +130,20 @@ begin
   dmConexao.qryTickets.Filtered := True;
 end;
 
+procedure TfrmPrincipal.FormShow(Sender: TObject);
+begin
+  AtualizarMetricasDashboard;
+end;
+
 procedure TfrmPrincipal.TabControl1Change(Sender: TObject);
 begin
   pnlDashboard.Visible := (TabControl1.TabIndex = 0);
   pnlListaChamados.Visible := (TabControl1.TabIndex = 1);
 
-
+  if TabControl1.TabIndex = 0 then
+  begin
+    AtualizarMetricasDashboard;
+  end;
 end;
 
 procedure TfrmPrincipal.edtPesquisaTicketsModuloChange(Sender: TObject);
@@ -134,5 +169,9 @@ begin
   dmConexao.qryTickets.Filter := 'empresa like ' + QuotedStr('%' + edtPesquisaTicketsEmpresa.Text + '%');
   dmConexao.qryTickets.Filtered := True;
 end;
+
+
+
+
 
 end.

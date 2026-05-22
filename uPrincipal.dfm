@@ -11,6 +11,7 @@ object frmPrincipal: TfrmPrincipal
   Font.Name = 'Segoe UI'
   Font.Style = []
   Position = poDesigned
+  OnShow = FormShow
   TextHeight = 15
   object TabControl1: TTabControl
     Left = 0
@@ -32,10 +33,10 @@ object frmPrincipal: TfrmPrincipal
       Height = 432
       Align = alClient
       BevelOuter = bvNone
+      Color = clSkyBlue
+      ParentBackground = False
       TabOrder = 1
       Visible = False
-      ExplicitLeft = 5
-      ExplicitTop = 27
       object btnRefresh: TButton
         Left = 8
         Top = 13
@@ -157,15 +158,18 @@ object frmPrincipal: TfrmPrincipal
       end
     end
     object pnlDashboard: TPanel
-      Left = 3
-      Top = 27
+      Left = 4
+      Top = 26
       Width = 843
       Height = 432
+      Align = alClient
       BevelOuter = bvNone
+      Color = clSkyBlue
+      ParentBackground = False
       TabOrder = 0
       object pnlCardAbertos: TPanel
-        Left = 221
-        Top = 296
+        Left = 21
+        Top = 24
         Width = 200
         Height = 100
         BevelOuter = bvNone
@@ -174,9 +178,10 @@ object frmPrincipal: TfrmPrincipal
         TabOrder = 0
         object lblTituloAbertos: TLabel
           Left = 0
-          Top = 5
+          Top = 0
           Width = 200
           Height = 25
+          Align = alTop
           Alignment = taCenter
           Caption = 'Chamados Abertos'
           Font.Charset = DEFAULT_CHARSET
@@ -185,13 +190,15 @@ object frmPrincipal: TfrmPrincipal
           Font.Name = 'Segoe UI'
           Font.Style = []
           ParentFont = False
+          ExplicitWidth = 159
         end
         object lblValorAbertos: TLabel
           Left = 0
-          Top = 34
-          Width = 200
-          Height = 75
+          Top = 36
+          Width = 201
+          Height = 54
           Alignment = taCenter
+          AutoSize = False
           Caption = '0'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
@@ -199,6 +206,91 @@ object frmPrincipal: TfrmPrincipal
           Font.Name = 'Segoe UI'
           Font.Style = []
           ParentFont = False
+          Layout = tlCenter
+        end
+      end
+      object pnlCardConcluidos: TPanel
+        Left = 621
+        Top = 24
+        Width = 200
+        Height = 100
+        BevelOuter = bvNone
+        Color = clWhite
+        ParentBackground = False
+        TabOrder = 1
+        object lblTituloConcluidos: TLabel
+          Left = 0
+          Top = 0
+          Width = 200
+          Height = 25
+          Align = alTop
+          Alignment = taCenter
+          Caption = 'Chamados Conclu'#237'dos'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -19
+          Font.Name = 'Segoe UI'
+          Font.Style = []
+          ParentFont = False
+          ExplicitWidth = 188
+        end
+        object lblValorConcluidos: TLabel
+          Left = 0
+          Top = 36
+          Width = 201
+          Height = 54
+          Alignment = taCenter
+          AutoSize = False
+          Caption = '0'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -40
+          Font.Name = 'Segoe UI'
+          Font.Style = []
+          ParentFont = False
+          Layout = tlCenter
+        end
+      end
+      object pnlCardTotal: TPanel
+        Left = 325
+        Top = 24
+        Width = 200
+        Height = 100
+        BevelOuter = bvNone
+        Color = clWhite
+        ParentBackground = False
+        TabOrder = 2
+        object lblTituloTotal: TLabel
+          Left = 0
+          Top = 0
+          Width = 200
+          Height = 25
+          Align = alTop
+          Alignment = taCenter
+          Caption = 'Chamados Totais'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -19
+          Font.Name = 'Segoe UI'
+          Font.Style = []
+          ParentFont = False
+          ExplicitWidth = 142
+        end
+        object lblValorTotal: TLabel
+          Left = 0
+          Top = 36
+          Width = 201
+          Height = 54
+          Alignment = taCenter
+          AutoSize = False
+          Caption = '0'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -40
+          Font.Name = 'Segoe UI'
+          Font.Style = []
+          ParentFont = False
+          Layout = tlCenter
         end
       end
     end

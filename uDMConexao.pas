@@ -13,6 +13,7 @@ type
     ADOConnection1: TADOConnection;
     qryLogin: TADOQuery;
     qryExec: TADOQuery;
+    qryDashboard: TADOQuery;
   private
     { Private declarations }
   public

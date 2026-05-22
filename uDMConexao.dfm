@@ -61,4 +61,10 @@ object dmConexao: TdmConexao
     Left = 120
     Top = 176
   end
+  object qryDashboard: TADOQuery
+    Connection = ADOConnection1
+    Parameters = <>
+    Left = 80
+    Top = 176
+  end
 end

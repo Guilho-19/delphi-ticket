@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>2026/02/16 11:00:32.000.174,=C:\Users\guilherme.nunes\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>2026/02/16 11:01:04.000.159,C:\Users\guilherme.nunes\Documents\Embarcadero\Studio\Projects\Unit1.dfm=C:\Users\guilherme.nunes\Desktop\delphi-ticket\uMain.dfm</Transaction>
+    <Transaction>2026/02/16 11:01:04.000.159,C:\Users\guilherme.nunes\Documents\Embarcadero\Studio\Projects\Unit1.pas=C:\Users\guilherme.nunes\Desktop\delphi-ticket\uMain.pas</Transaction>
+    <Transaction>2026/02/16 15:45:45.000.159,C:\Users\guilherme.nunes\Documents\Embarcadero\Studio\Projects\Project1.dproj=C:\Users\guilherme.nunes\Desktop\delphi-ticket\Project1.dproj</Transaction>
+    <Transaction>2026/02/16 16:32:01.000.645,=C:\Users\guilherme.nunes\Desktop\delphi-ticket\uPrincipal.pas</Transaction>
+    <Transaction>2026/05/14 10:47:33.000.647,=C:\Users\Guilho\Desktop\delphi-ticket\uDMConexao.pas</Transaction>
+    <Transaction>2026/05/15 22:39:00.000.319,=C:\Users\Guilho\Desktop\delphi-ticket\Unit1.pas</Transaction>
+    <Transaction>2026/05/15 22:40:11.000.402,C:\Users\Guilho\Desktop\delphi-ticket\Unit1.dfm=C:\Users\Guilho\Desktop\delphi-ticket\uCadastro.dfm</Transaction>
+    <Transaction>2026/05/15 22:40:11.000.402,C:\Users\Guilho\Desktop\delphi-ticket\Unit1.pas=C:\Users\Guilho\Desktop\delphi-ticket\uCadastro.pas</Transaction>
+    <Transaction>2026/05/16 16:27:52.000.195,C:\Users\Guilho\Desktop\delphi-ticket\uCadastroTeste.dfm=C:\Users\Guilho\Desktop\delphi-ticket\uCadastro.dfm</Transaction>
+    <Transaction>2026/05/16 16:27:52.000.195,C:\Users\Guilho\Desktop\delphi-ticket\uCadastroTeste.pas=C:\Users\Guilho\Desktop\delphi-ticket\uCadastro.pas</Transaction>
+    <Transaction>2026/05/16 16:28:08.000.929,C:\Users\Guilho\Desktop\delphi-ticket\uCadastro.dfm=C:\Users\Guilho\Desktop\delphi-ticket\uCadastroTeste.dfm</Transaction>
+    <Transaction>2026/05/16 16:28:08.000.944,C:\Users\Guilho\Desktop\delphi-ticket\uCadastroTeste.pas=C:\Users\Guilho\Desktop\delphi-ticket\uCadastro.pas</Transaction>
+    <Transaction>2026/05/16 16:28:08.000.944,C:\Users\Guilho\Desktop\delphi-ticket\uCadastroTeste.dfm=C:\Users\Guilho\Desktop\delphi-ticket\uCadastro.dfm</Transaction>
+    <Transaction>2026/05/16 16:28:08.000.929,C:\Users\Guilho\Desktop\delphi-ticket\uCadastro.pas=C:\Users\Guilho\Desktop\delphi-ticket\uCadastroTeste.pas</Transaction>
+    <Transaction>2026/05/16 16:31:41.000.561,C:\Users\Guilho\Desktop\delphi-ticket\uCadastroTeste.pas=</Transaction>
+    <Transaction>2026/05/16 16:31:48.000.114,=C:\Users\Guilho\Desktop\delphi-ticket\uCadastro.pas</Transaction>
+    <Transaction>2026/05/21 23:08:13.307,C:\Users\Guilho\Desktop\delphi-ticket\Tickets.dproj=C:\Users\Guilho\Desktop\delphi-ticket\Project1.dproj</Transaction>
+  </Transactions>
+</BorlandProject>
