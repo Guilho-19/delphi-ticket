@@ -345,7 +345,7 @@ object frmPrincipal: TfrmPrincipal
           OtherSlice.Legend.Visible = False
         end
       end
-      object chtResponsibles: TChart
+      object chtAtendentes: TChart
         Left = 422
         Top = 150
         Width = 427

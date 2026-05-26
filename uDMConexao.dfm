@@ -70,7 +70,13 @@ object dmConexao: TdmConexao
   object qryGrafico: TADOQuery
     Connection = ADOConnection1
     Parameters = <>
-    Left = 40
-    Top = 176
+    Left = 120
+    Top = 240
+  end
+  object qryAtendentes: TADOQuery
+    Connection = ADOConnection1
+    Parameters = <>
+    Left = 80
+    Top = 240
   end
 end

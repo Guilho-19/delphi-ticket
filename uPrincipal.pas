@@ -33,7 +33,7 @@ type
     lblValorTotal: TLabel;
     chtModulos: TChart;
     Series1: TPieSeries;
-    chtResponsibles: TChart;
+    chtAtendentes: TChart;
     Series2: THorizBarSeries;
     procedure btnRefreshClick(Sender: TObject);
     procedure DBGrid1DrawColumnCell(Sender: TObject; const Rect: TRect;
@@ -99,9 +99,27 @@ begin
       dmConexao.qryGrafico.Next;
     end;
 
+    dmConexao.qryAtendentes.Close;
+    dmConexao.qryAtendentes.SQL.Text := 'select responsible as Atendente, count(id) as Total from Tickets group by responsible order by Total asc';
+    dmConexao.qryAtendentes.Open;
+
+    chtAtendentes.Series[0].Clear;
+
+    dmConexao.qryAtendentes.First;
+    while not dmConexao.qryAtendentes.Eof do
+    begin
+      chtAtendentes.Series[0].Add(
+        dmConexao.qryAtendentes.FieldByName('Total').AsFloat,
+        dmConexao.qryAtendentes.FieldByName('Atendente').AsString,
+        clDefault
+      );
+
+      dmConexao.qryAtendentes.Next;
+    end;
+
     except
       on E: Exception do
-        ShowMessage('Erro ao carregar o gráfico: ' + E.Message);
+        ShowMessage('Erro ao carregar os gráficos: ' + E.Message);
   end;
 end;
 
