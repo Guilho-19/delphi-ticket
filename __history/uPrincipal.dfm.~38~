@@ -309,7 +309,7 @@ object frmPrincipal: TfrmPrincipal
         Width = 425
         Height = 282
         Title.Text.Strings = (
-          'Chamados por M'#243'dulo')
+          'TChart')
         View3D = False
         View3DOptions.Elevation = 315
         View3DOptions.Orthogonal = False
@@ -351,7 +351,7 @@ object frmPrincipal: TfrmPrincipal
         Width = 427
         Height = 283
         Title.Text.Strings = (
-          'Tickets por Atendente')
+          'TChart')
         View3D = False
         Color = clSkyBlue
         TabOrder = 2
