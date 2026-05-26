@@ -40,16 +40,7 @@ Coordinates=10,282,85,36
 [dmConexao.qryExec]
 Coordinates=124,10,133,58
 
-[pnlCardAbertos]
+[]
 Coordinates=267,10,104,58
 Visible=True
-
-[lblTituloAbertos]
-Coordinates=10,10,104,58
-
-[lblValorAbertos]
-Coordinates=241,146,102,58
-
-[]
-Coordinates=413,78,55,58
 

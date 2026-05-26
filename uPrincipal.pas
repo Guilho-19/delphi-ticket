@@ -5,7 +5,9 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, uMain, Data.DB, Data.Win.ADODB,
-  Vcl.Grids, Vcl.DBGrids, Vcl.StdCtrls, Vcl.ExtCtrls, Vcl.ComCtrls;
+  Vcl.Grids, Vcl.DBGrids, Vcl.StdCtrls, Vcl.ExtCtrls, Vcl.ComCtrls,
+  VclTee.TeeGDIPlus, VCLTee.TeEngine, VCLTee.Series, VCLTee.TeeProcs,
+  VCLTee.Chart;
 
 type
   TfrmPrincipal = class(TForm)
@@ -19,6 +21,7 @@ type
     edtPesquisaTicketsModulo: TEdit;
     edtPesquisaTicketsResponsavel: TEdit;
     edtPesquisaTicketsTitulo: TEdit;
+    pnlHeaderCards: TPanel;
     pnlCardAbertos: TPanel;
     lblTituloAbertos: TLabel;
     lblValorAbertos: TLabel;
@@ -28,6 +31,10 @@ type
     pnlCardTotal: TPanel;
     lblTituloTotal: TLabel;
     lblValorTotal: TLabel;
+    chtModulos: TChart;
+    Series1: TPieSeries;
+    chtResponsibles: TChart;
+    Series2: THorizBarSeries;
     procedure btnRefreshClick(Sender: TObject);
     procedure DBGrid1DrawColumnCell(Sender: TObject; const Rect: TRect;
       DataCol: Integer; Column: TColumn; State: TGridDrawState);
@@ -71,11 +78,36 @@ begin
     on E: Exception do
       ShowMessage('Erro ao carregar métricas: ' + E.Message);
   end;
+
+  dmConexao.qryGrafico.Close;
+  dmConexao.qryGrafico.SQL.Text := 'select type as Modulo, count(id) as Quantidade from Tickets group by type';
+
+  try
+    dmConexao.qryGrafico.Open;
+
+    chtModulos.Series[0].Clear;
+
+    dmConexao.qryGrafico.First;
+    while not dmConexao.qryGrafico.Eof do
+    begin
+      chtModulos.Series[0].Add(
+        dmConexao.qryGrafico.FieldByName('Quantidade').AsFloat,
+        dmConexao.qryGrafico.FieldByName('Modulo').AsString,
+        clDefault
+      );
+
+      dmConexao.qryGrafico.Next;
+    end;
+
+    except
+      on E: Exception do
+        ShowMessage('Erro ao carregar o gráfico: ' + E.Message);
+  end;
 end;
 
 procedure TfrmPrincipal.btnRefreshClick(Sender: TObject);
 begin
-  dmConexao.qryTickets.SQL.Text := 'select id, responsible as Responsavel, title as Titulo, type as Modulo, requester as empresa, priority as Prioridade, columnId as Status, createdAt as Data from Tickets order by Data desc';
+  dmConexao.qryTickets.SQL.Text := 'select id, responsible as Responsavel, title as Titulo, type as Modulo, requester as empresa, priority as Prioridade, columnId as Status, createdAt as Data from Tickets order by Modulo asc';
   dmConexao.qryTickets.Open;
 end;
 

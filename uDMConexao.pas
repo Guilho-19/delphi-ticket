@@ -14,6 +14,7 @@ type
     qryLogin: TADOQuery;
     qryExec: TADOQuery;
     qryDashboard: TADOQuery;
+    qryGrafico: TADOQuery;
   private
     { Private declarations }
   public

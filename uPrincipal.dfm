@@ -167,130 +167,204 @@ object frmPrincipal: TfrmPrincipal
       Color = clSkyBlue
       ParentBackground = False
       TabOrder = 0
-      object pnlCardAbertos: TPanel
-        Left = 21
-        Top = 24
-        Width = 200
-        Height = 100
-        BevelOuter = bvNone
-        Color = clWhite
+      object pnlHeaderCards: TPanel
+        Left = 0
+        Top = 0
+        Width = 843
+        Height = 150
+        Align = alTop
+        Color = clSkyBlue
         ParentBackground = False
         TabOrder = 0
-        object lblTituloAbertos: TLabel
-          Left = 0
-          Top = 0
+        object pnlCardAbertos: TPanel
+          Left = 21
+          Top = 24
           Width = 200
-          Height = 25
-          Align = alTop
-          Alignment = taCenter
-          Caption = 'Chamados Abertos'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -19
-          Font.Name = 'Segoe UI'
-          Font.Style = []
-          ParentFont = False
-          ExplicitWidth = 159
+          Height = 100
+          BevelOuter = bvNone
+          Color = clWhite
+          ParentBackground = False
+          TabOrder = 0
+          object lblTituloAbertos: TLabel
+            Left = 0
+            Top = 0
+            Width = 200
+            Height = 25
+            Align = alTop
+            Alignment = taCenter
+            Caption = 'Chamados Abertos'
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -19
+            Font.Name = 'Segoe UI'
+            Font.Style = []
+            ParentFont = False
+            ExplicitWidth = 159
+          end
+          object lblValorAbertos: TLabel
+            Left = 0
+            Top = 36
+            Width = 201
+            Height = 54
+            Alignment = taCenter
+            AutoSize = False
+            Caption = '0'
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -40
+            Font.Name = 'Segoe UI'
+            Font.Style = []
+            ParentFont = False
+            Layout = tlCenter
+          end
         end
-        object lblValorAbertos: TLabel
-          Left = 0
-          Top = 36
-          Width = 201
-          Height = 54
-          Alignment = taCenter
-          AutoSize = False
-          Caption = '0'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -40
-          Font.Name = 'Segoe UI'
-          Font.Style = []
-          ParentFont = False
-          Layout = tlCenter
+        object pnlCardConcluidos: TPanel
+          Left = 621
+          Top = 24
+          Width = 200
+          Height = 100
+          BevelOuter = bvNone
+          Color = clWhite
+          ParentBackground = False
+          TabOrder = 1
+          object lblTituloConcluidos: TLabel
+            Left = 0
+            Top = 0
+            Width = 200
+            Height = 25
+            Align = alTop
+            Alignment = taCenter
+            Caption = 'Chamados Conclu'#237'dos'
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -19
+            Font.Name = 'Segoe UI'
+            Font.Style = []
+            ParentFont = False
+            ExplicitWidth = 188
+          end
+          object lblValorConcluidos: TLabel
+            Left = 0
+            Top = 36
+            Width = 201
+            Height = 54
+            Alignment = taCenter
+            AutoSize = False
+            Caption = '0'
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -40
+            Font.Name = 'Segoe UI'
+            Font.Style = []
+            ParentFont = False
+            Layout = tlCenter
+          end
+        end
+        object pnlCardTotal: TPanel
+          Left = 325
+          Top = 24
+          Width = 200
+          Height = 100
+          BevelOuter = bvNone
+          Color = clWhite
+          ParentBackground = False
+          TabOrder = 2
+          object lblTituloTotal: TLabel
+            Left = 0
+            Top = 0
+            Width = 200
+            Height = 25
+            Align = alTop
+            Alignment = taCenter
+            Caption = 'Chamados Totais'
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -19
+            Font.Name = 'Segoe UI'
+            Font.Style = []
+            ParentFont = False
+            ExplicitWidth = 142
+          end
+          object lblValorTotal: TLabel
+            Left = 0
+            Top = 36
+            Width = 201
+            Height = 54
+            Alignment = taCenter
+            AutoSize = False
+            Caption = '0'
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -40
+            Font.Name = 'Segoe UI'
+            Font.Style = []
+            ParentFont = False
+            Layout = tlCenter
+          end
         end
       end
-      object pnlCardConcluidos: TPanel
-        Left = 621
-        Top = 24
-        Width = 200
-        Height = 100
-        BevelOuter = bvNone
-        Color = clWhite
-        ParentBackground = False
+      object chtModulos: TChart
+        Left = 0
+        Top = 150
+        Width = 425
+        Height = 282
+        Title.Text.Strings = (
+          'TChart')
+        View3D = False
+        View3DOptions.Elevation = 315
+        View3DOptions.Orthogonal = False
+        View3DOptions.Perspective = 0
+        View3DOptions.Rotation = 360
+        Color = clSkyBlue
         TabOrder = 1
-        object lblTituloConcluidos: TLabel
-          Left = 0
-          Top = 0
-          Width = 200
-          Height = 25
-          Align = alTop
-          Alignment = taCenter
-          Caption = 'Chamados Conclu'#237'dos'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -19
-          Font.Name = 'Segoe UI'
-          Font.Style = []
-          ParentFont = False
-          ExplicitWidth = 188
-        end
-        object lblValorConcluidos: TLabel
-          Left = 0
-          Top = 36
-          Width = 201
-          Height = 54
-          Alignment = taCenter
-          AutoSize = False
-          Caption = '0'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -40
-          Font.Name = 'Segoe UI'
-          Font.Style = []
-          ParentFont = False
-          Layout = tlCenter
+        DefaultCanvas = 'TGDIPlusCanvas'
+        ColorPaletteIndex = 13
+        object Series1: TPieSeries
+          HoverElement = []
+          Marks.Visible = False
+          Marks.Tail.Margin = 2
+          XValues.Order = loAscending
+          YValues.Name = 'Pie'
+          YValues.Order = loNone
+          Frame.InnerBrush.BackColor = clRed
+          Frame.InnerBrush.Gradient.EndColor = clGray
+          Frame.InnerBrush.Gradient.MidColor = clWhite
+          Frame.InnerBrush.Gradient.StartColor = 4210752
+          Frame.InnerBrush.Gradient.Visible = True
+          Frame.MiddleBrush.BackColor = clYellow
+          Frame.MiddleBrush.Gradient.EndColor = 8553090
+          Frame.MiddleBrush.Gradient.MidColor = clWhite
+          Frame.MiddleBrush.Gradient.StartColor = clGray
+          Frame.MiddleBrush.Gradient.Visible = True
+          Frame.OuterBrush.BackColor = clGreen
+          Frame.OuterBrush.Gradient.EndColor = 4210752
+          Frame.OuterBrush.Gradient.MidColor = clWhite
+          Frame.OuterBrush.Gradient.StartColor = clSilver
+          Frame.OuterBrush.Gradient.Visible = True
+          Frame.Width = 4
+          OtherSlice.Legend.Visible = False
         end
       end
-      object pnlCardTotal: TPanel
-        Left = 325
-        Top = 24
-        Width = 200
-        Height = 100
-        BevelOuter = bvNone
-        Color = clWhite
-        ParentBackground = False
+      object chtResponsibles: TChart
+        Left = 422
+        Top = 150
+        Width = 427
+        Height = 283
+        Title.Text.Strings = (
+          'TChart')
+        View3D = False
+        Color = clSkyBlue
         TabOrder = 2
-        object lblTituloTotal: TLabel
-          Left = 0
-          Top = 0
-          Width = 200
-          Height = 25
-          Align = alTop
-          Alignment = taCenter
-          Caption = 'Chamados Totais'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -19
-          Font.Name = 'Segoe UI'
-          Font.Style = []
-          ParentFont = False
-          ExplicitWidth = 142
-        end
-        object lblValorTotal: TLabel
-          Left = 0
-          Top = 36
-          Width = 201
-          Height = 54
-          Alignment = taCenter
-          AutoSize = False
-          Caption = '0'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -40
-          Font.Name = 'Segoe UI'
-          Font.Style = []
-          ParentFont = False
-          Layout = tlCenter
+        DefaultCanvas = 'TGDIPlusCanvas'
+        ColorPaletteIndex = 13
+        object Series2: THorizBarSeries
+          HoverElement = []
+          BarBrush.Gradient.Direction = gdLeftRight
+          Gradient.Direction = gdLeftRight
+          XValues.Name = 'Bar'
+          XValues.Order = loNone
+          YValues.Name = 'Y'
+          YValues.Order = loAscending
         end
       end
     end
