@@ -31,8 +31,10 @@ type
     pnlCardTotal: TPanel;
     lblTituloTotal: TLabel;
     lblValorTotal: TLabel;
-    Chart1: TChart;
+    chtModulos: TChart;
     Series1: TPieSeries;
+    chtAtendentes: TChart;
+    Series2: THorizBarSeries;
     procedure btnRefreshClick(Sender: TObject);
     procedure DBGrid1DrawColumnCell(Sender: TObject; const Rect: TRect;
       DataCol: Integer; Column: TColumn; State: TGridDrawState);
@@ -77,12 +79,53 @@ begin
       ShowMessage('Erro ao carregar métricas: ' + E.Message);
   end;
 
+  dmConexao.qryGrafico.Close;
+  dmConexao.qryGrafico.SQL.Text := 'select type as Modulo, count(id) as Quantidade from Tickets group by type';
 
+  try
+    dmConexao.qryGrafico.Open;
+
+    chtModulos.Series[0].Clear;
+
+    dmConexao.qryGrafico.First;
+    while not dmConexao.qryGrafico.Eof do
+    begin
+      chtModulos.Series[0].Add(
+        dmConexao.qryGrafico.FieldByName('Quantidade').AsFloat,
+        dmConexao.qryGrafico.FieldByName('Modulo').AsString,
+        clDefault
+      );
+
+      dmConexao.qryGrafico.Next;
+    end;
+
+    dmConexao.qryAtendentes.Close;
+    dmConexao.qryAtendentes.SQL.Text := 'select responsible as Atendente, count(id) as Total from Tickets group by responsible order by Total asc';
+    dmConexao.qryAtendentes.Open;
+
+    chtAtendentes.Series[0].Clear;
+
+    dmConexao.qryAtendentes.First;
+    while not dmConexao.qryAtendentes.Eof do
+    begin
+      chtAtendentes.Series[0].Add(
+        dmConexao.qryAtendentes.FieldByName('Total').AsFloat,
+        dmConexao.qryAtendentes.FieldByName('Atendente').AsString,
+        clDefault
+      );
+
+      dmConexao.qryAtendentes.Next;
+    end;
+
+    except
+      on E: Exception do
+        ShowMessage('Erro ao carregar os gráficos: ' + E.Message);
+  end;
 end;
 
 procedure TfrmPrincipal.btnRefreshClick(Sender: TObject);
 begin
-  dmConexao.qryTickets.SQL.Text := 'select id, responsible as Responsavel, title as Titulo, type as Modulo, requester as empresa, priority as Prioridade, columnId as Status, createdAt as Data from Tickets order by Data desc';
+  dmConexao.qryTickets.SQL.Text := 'select id, responsible as Responsavel, title as Titulo, type as Modulo, requester as empresa, priority as Prioridade, columnId as Status, createdAt as Data from Tickets order by Modulo asc';
   dmConexao.qryTickets.Open;
 end;
 

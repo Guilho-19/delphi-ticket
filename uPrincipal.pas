@@ -35,6 +35,7 @@ type
     Series1: TPieSeries;
     chtAtendentes: TChart;
     Series2: THorizBarSeries;
+    pnlNovoChamado: TPanel;
     procedure btnRefreshClick(Sender: TObject);
     procedure DBGrid1DrawColumnCell(Sender: TObject; const Rect: TRect;
       DataCol: Integer; Column: TColumn; State: TGridDrawState);
@@ -189,6 +190,7 @@ procedure TfrmPrincipal.TabControl1Change(Sender: TObject);
 begin
   pnlDashboard.Visible := (TabControl1.TabIndex = 0);
   pnlListaChamados.Visible := (TabControl1.TabIndex = 1);
+  pnlNovoChamado.Visible := (TabControl1.TabIndex = 2);
 
   if TabControl1.TabIndex = 0 then
   begin

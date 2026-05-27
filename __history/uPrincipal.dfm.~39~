@@ -23,7 +23,7 @@ object frmPrincipal: TfrmPrincipal
     Tabs.Strings = (
       'Vis'#227'o Geral'
       'Meus Chamados'
-      'Novo Chamado')
+      'Configura'#231#245'es')
     TabIndex = 0
     OnChange = TabControl1Change
     object pnlListaChamados: TPanel
@@ -367,20 +367,6 @@ object frmPrincipal: TfrmPrincipal
           YValues.Order = loAscending
         end
       end
-    end
-    object pnlNovoChamado: TPanel
-      Left = 4
-      Top = 26
-      Width = 843
-      Height = 432
-      Align = alClient
-      BevelOuter = bvNone
-      TabOrder = 2
-      Visible = False
-      ExplicitLeft = 320
-      ExplicitTop = 232
-      ExplicitWidth = 185
-      ExplicitHeight = 41
     end
   end
 end
