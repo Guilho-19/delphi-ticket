@@ -1,5 +1,5 @@
 object dmConexao: TdmConexao
-  Height = 322
+  Height = 437
   Width = 209
   object DataSource1: TDataSource
     DataSet = qryTickets
@@ -78,5 +78,11 @@ object dmConexao: TdmConexao
     Parameters = <>
     Left = 80
     Top = 240
+  end
+  object qrySistemas: TADOQuery
+    Connection = ADOConnection1
+    Parameters = <>
+    Left = 120
+    Top = 304
   end
 end

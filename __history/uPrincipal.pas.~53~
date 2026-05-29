@@ -1,0 +1,241 @@
+unit uPrincipal;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, uMain, Data.DB, Data.Win.ADODB,
+  Vcl.Grids, Vcl.DBGrids, Vcl.StdCtrls, Vcl.ExtCtrls, Vcl.ComCtrls,
+  VclTee.TeeGDIPlus, VCLTee.TeEngine, VCLTee.Series, VCLTee.TeeProcs,
+  VCLTee.Chart;
+
+type
+  TfrmPrincipal = class(TForm)
+    TabControl1: TTabControl;
+    pnlDashboard: TPanel;
+    pnlListaChamados: TPanel;
+    btnRefresh: TButton;
+    DBGrid1: TDBGrid;
+    edtPesquisaTicketsEmpresa: TEdit;
+    edtPesquisaTicketsID: TEdit;
+    edtPesquisaTicketsModulo: TEdit;
+    edtPesquisaTicketsResponsavel: TEdit;
+    edtPesquisaTicketsTitulo: TEdit;
+    pnlHeaderCards: TPanel;
+    pnlCardAbertos: TPanel;
+    lblTituloAbertos: TLabel;
+    lblValorAbertos: TLabel;
+    pnlCardConcluidos: TPanel;
+    lblTituloConcluidos: TLabel;
+    lblValorConcluidos: TLabel;
+    pnlCardTotal: TPanel;
+    lblTituloTotal: TLabel;
+    lblValorTotal: TLabel;
+    chtModulos: TChart;
+    Series1: TPieSeries;
+    chtAtendentes: TChart;
+    Series2: THorizBarSeries;
+    pnlNovoChamado: TPanel;
+    edtTicketID: TEdit;
+    lblTicketID: TLabel;
+    edtTicketName: TEdit;
+    lblTicketName: TLabel;
+    cmbTicketModulo: TComboBox;
+    lblTicketModulo: TLabel;
+    procedure btnRefreshClick(Sender: TObject);
+    procedure DBGrid1DrawColumnCell(Sender: TObject; const Rect: TRect;
+      DataCol: Integer; Column: TColumn; State: TGridDrawState);
+    procedure edtPesquisaTicketsIDChange(Sender: TObject);
+    procedure edtPesquisaTicketsResponsavelChange(Sender: TObject);
+    procedure edtPesquisaTicketsTituloChange(Sender: TObject);
+    procedure edtPesquisaTicketsEmpresaChange(Sender: TObject);
+    procedure edtPesquisaTicketsModuloChange(Sender: TObject);
+    procedure TabControl1Change(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+  private
+    { Private declarations }
+    procedure AtualizarMetricasDashboard;
+    procedure CarregarSistemasComboBox;
+  public
+    { Public declarations }
+  end;
+
+var
+  frmPrincipal: TfrmPrincipal;
+
+implementation
+
+{$R *.dfm}
+
+uses uDMConexao;
+
+procedure TfrmPrincipal.AtualizarMetricasDashboard;
+begin
+  dmConexao.qryDashboard.Close;
+  dmConexao.qryDashboard.SQL.Clear;
+
+  dmConexao.qryDashboard.SQL.Add('select count(id) as Total, count(case when columnId = ''Em Análise'' then 1 end) as Abertos, count(case when columnId = ''Finalizado'' then 1 end) as Concluídos from Tickets');
+
+  try
+    dmConexao.qryDashboard.Open;
+
+    lblValorTotal.Caption := IntToStr(dmConexao.qryDashboard.FieldByName('Total').AsInteger);
+    lblValorAbertos.Caption := IntToStr(dmConexao.qryDashboard.FieldByName('Abertos').AsInteger);
+    lblValorConcluidos.Caption := IntToStr(dmConexao.qryDashboard.FieldByName('Concluídos').AsInteger);
+  except
+    on E: Exception do
+      ShowMessage('Erro ao carregar métricas: ' + E.Message);
+  end;
+
+  dmConexao.qryGrafico.Close;
+  dmConexao.qryGrafico.SQL.Text := 'select type as Modulo, count(id) as Quantidade from Tickets group by type';
+
+  try
+    dmConexao.qryGrafico.Open;
+
+    chtModulos.Series[0].Clear;
+
+    dmConexao.qryGrafico.First;
+    while not dmConexao.qryGrafico.Eof do
+    begin
+      chtModulos.Series[0].Add(
+        dmConexao.qryGrafico.FieldByName('Quantidade').AsFloat,
+        dmConexao.qryGrafico.FieldByName('Modulo').AsString,
+        clDefault
+      );
+
+      dmConexao.qryGrafico.Next;
+    end;
+
+    dmConexao.qryAtendentes.Close;
+    dmConexao.qryAtendentes.SQL.Text := 'select responsible as Atendente, count(id) as Total from Tickets group by responsible order by Total asc';
+    dmConexao.qryAtendentes.Open;
+
+    chtAtendentes.Series[0].Clear;
+
+    dmConexao.qryAtendentes.First;
+    while not dmConexao.qryAtendentes.Eof do
+    begin
+      chtAtendentes.Series[0].Add(
+        dmConexao.qryAtendentes.FieldByName('Total').AsFloat,
+        dmConexao.qryAtendentes.FieldByName('Atendente').AsString,
+        clDefault
+      );
+
+      dmConexao.qryAtendentes.Next;
+    end;
+
+    except
+      on E: Exception do
+        ShowMessage('Erro ao carregar os gráficos: ' + E.Message);
+  end;
+end;
+
+procedure TfrmPrincipal.btnRefreshClick(Sender: TObject);
+begin
+  dmConexao.qryTickets.SQL.Text := 'select id, responsible as Responsavel, title as Titulo, type as Modulo, requester as empresa, priority as Prioridade, columnId as Status, createdAt as Data from Tickets order by Modulo asc';
+  dmConexao.qryTickets.Open;
+end;
+
+procedure TfrmPrincipal.CarregarSistemasComboBox;
+begin
+  dmConexao.qrySistemas.Close;
+end;
+
+procedure TfrmPrincipal.DBGrid1DrawColumnCell(Sender: TObject;
+  const Rect: TRect; DataCol: Integer; Column: TColumn;
+  State: TGridDrawState);
+begin
+  begin
+    if not (gdSelected in State) then
+      if (DBGrid1.DataSource.DataSet.RecNo mod 2 = 0) then
+        DBGrid1.Canvas.Brush.Color := clWhite
+      else
+        DBGrid1.Canvas.Brush.Color := $00F5F5F5;
+  end;
+  DBGrid1.DefaultDrawColumnCell(Rect, DataCol, Column, State);
+end;
+
+
+procedure TfrmPrincipal.edtPesquisaTicketsIDChange(Sender: TObject);
+begin
+  if Trim(edtPesquisaTicketsID.Text) = '' then
+  begin
+    dmConexao.qryTickets.Filtered := False;
+    Exit;
+  end;
+
+  dmConexao.qryTickets.Filter := 'id like ' + QuotedStr('*' + edtPesquisaTicketsID.Text + '*');
+  dmConexao.qryTickets.Filtered := True;
+end;
+
+procedure TfrmPrincipal.edtPesquisaTicketsResponsavelChange(Sender: TObject);
+begin
+  if Trim(edtPesquisaTicketsResponsavel.Text) = '' then
+  begin
+    dmConexao.qryTickets.Filtered := False;
+    Exit;
+  end;
+
+  dmConexao.qryTickets.Filter := 'responsavel like ' + QuotedStr('%' + edtPesquisaTicketsResponsavel.Text + '%');
+  dmConexao.qryTickets.Filtered := True;
+end;
+
+procedure TfrmPrincipal.edtPesquisaTicketsTituloChange(Sender: TObject);
+begin
+  if Trim(edtPesquisaTicketsTitulo.Text) = '' then
+  begin
+    dmConexao.qryTickets.Filtered := False;
+    Exit;
+  end;
+
+  dmConexao.qryTickets.Filter := 'titulo like ' + QuotedStr('%' + edtPesquisaTicketsTitulo.Text + '%');
+  dmConexao.qryTickets.Filtered := True;
+end;
+
+procedure TfrmPrincipal.FormShow(Sender: TObject);
+begin
+  AtualizarMetricasDashboard;
+end;
+
+procedure TfrmPrincipal.TabControl1Change(Sender: TObject);
+begin
+  pnlDashboard.Visible := (TabControl1.TabIndex = 0);
+  pnlListaChamados.Visible := (TabControl1.TabIndex = 1);
+  pnlNovoChamado.Visible := (TabControl1.TabIndex = 2);
+
+  if TabControl1.TabIndex = 0 then
+  begin
+    AtualizarMetricasDashboard;
+  end;
+end;
+
+procedure TfrmPrincipal.edtPesquisaTicketsModuloChange(Sender: TObject);
+begin
+  if Trim(edtPesquisaTicketsModulo.Text) = '' then
+  begin
+    dmConexao.qryTickets.Filtered := False;
+    Exit;
+  end;
+
+  dmConexao.qryTickets.Filter := 'modulo like ' + QuotedStr('%' + edtPesquisaTicketsModulo.Text + '%');
+  dmConexao.qryTickets.Filtered := True;
+end;
+
+procedure TfrmPrincipal.edtPesquisaTicketsEmpresaChange(Sender: TObject);
+begin
+  if Trim(edtPesquisaTicketsEmpresa.Text) = '' then
+  begin
+    dmConexao.qryTickets.Filtered := False;
+    Exit;
+  end;
+
+  dmConexao.qryTickets.Filter := 'empresa like ' + QuotedStr('%' + edtPesquisaTicketsEmpresa.Text + '%');
+  dmConexao.qryTickets.Filtered := True;
+end;
+
+
+
+
+
+end.

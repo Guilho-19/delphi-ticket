@@ -375,12 +375,53 @@ object frmPrincipal: TfrmPrincipal
       Height = 432
       Align = alClient
       BevelOuter = bvNone
+      Color = clSkyBlue
+      ParentBackground = False
       TabOrder = 2
       Visible = False
-      ExplicitLeft = 320
-      ExplicitTop = 232
-      ExplicitWidth = 185
-      ExplicitHeight = 41
+      object lblTicketID: TLabel
+        Left = 56
+        Top = 58
+        Width = 35
+        Height = 15
+        Caption = 'Ticket:'
+      end
+      object lblTicketName: TLabel
+        Left = 57
+        Top = 91
+        Width = 34
+        Height = 15
+        Caption = 'T'#237'tulo:'
+      end
+      object lblTicketModulo: TLabel
+        Left = 48
+        Top = 133
+        Width = 45
+        Height = 15
+        Caption = 'M'#243'dulo:'
+      end
+      object edtTicketID: TEdit
+        Left = 124
+        Top = 55
+        Width = 121
+        Height = 23
+        TabOrder = 0
+      end
+      object edtTicketName: TEdit
+        Left = 124
+        Top = 88
+        Width = 121
+        Height = 23
+        TabOrder = 1
+      end
+      object cmbTicketModulo: TComboBox
+        Left = 124
+        Top = 130
+        Width = 145
+        Height = 23
+        TabOrder = 2
+        Text = 'cmbTicketModulo'
+      end
     end
   end
 end

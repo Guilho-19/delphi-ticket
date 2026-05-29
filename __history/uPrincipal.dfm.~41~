@@ -1,0 +1,386 @@
+object frmPrincipal: TfrmPrincipal
+  Left = 0
+  Top = 0
+  Caption = 'frmPrincipal'
+  ClientHeight = 462
+  ClientWidth = 851
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -12
+  Font.Name = 'Segoe UI'
+  Font.Style = []
+  Position = poDesigned
+  OnShow = FormShow
+  TextHeight = 15
+  object TabControl1: TTabControl
+    Left = 0
+    Top = 0
+    Width = 851
+    Height = 462
+    Align = alClient
+    TabOrder = 0
+    Tabs.Strings = (
+      'Vis'#227'o Geral'
+      'Meus Chamados'
+      'Novo Chamado')
+    TabIndex = 0
+    OnChange = TabControl1Change
+    object pnlListaChamados: TPanel
+      Left = 4
+      Top = 26
+      Width = 843
+      Height = 432
+      Align = alClient
+      BevelOuter = bvNone
+      Color = clSkyBlue
+      ParentBackground = False
+      TabOrder = 1
+      Visible = False
+      object btnRefresh: TButton
+        Left = 8
+        Top = 13
+        Width = 75
+        Height = 25
+        Caption = '&Atualizar'
+        TabOrder = 0
+        OnClick = btnRefreshClick
+      end
+      object DBGrid1: TDBGrid
+        Left = 0
+        Top = 80
+        Width = 843
+        Height = 352
+        Align = alBottom
+        DataSource = dmConexao.DataSource1
+        ReadOnly = True
+        TabOrder = 1
+        TitleFont.Charset = DEFAULT_CHARSET
+        TitleFont.Color = clWindowText
+        TitleFont.Height = -12
+        TitleFont.Name = 'Segoe UI'
+        TitleFont.Style = []
+        OnDrawColumnCell = DBGrid1DrawColumnCell
+        Columns = <
+          item
+            Expanded = False
+            FieldName = 'id'
+            Width = 50
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'Responsavel'
+            Width = 75
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'Titulo'
+            Width = 250
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'Modulo'
+            Width = 90
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'empresa'
+            Width = 100
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'Prioridade'
+            Width = 65
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'Status'
+            Width = 70
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'Data'
+            Width = 90
+            Visible = True
+          end>
+      end
+      object edtPesquisaTicketsEmpresa: TEdit
+        Left = 389
+        Top = 48
+        Width = 121
+        Height = 23
+        TabOrder = 2
+        TextHint = 'Empresa'
+        OnChange = edtPesquisaTicketsEmpresaChange
+      end
+      object edtPesquisaTicketsID: TEdit
+        Left = 8
+        Top = 48
+        Width = 121
+        Height = 23
+        TabOrder = 3
+        TextHint = 'ID'
+        OnChange = edtPesquisaTicketsIDChange
+      end
+      object edtPesquisaTicketsModulo: TEdit
+        Left = 516
+        Top = 48
+        Width = 121
+        Height = 23
+        TabOrder = 4
+        TextHint = 'Modulo'
+        OnChange = edtPesquisaTicketsModuloChange
+      end
+      object edtPesquisaTicketsResponsavel: TEdit
+        Left = 135
+        Top = 48
+        Width = 121
+        Height = 23
+        TabOrder = 5
+        TextHint = 'Respons'#225'vel'
+        OnChange = edtPesquisaTicketsResponsavelChange
+      end
+      object edtPesquisaTicketsTitulo: TEdit
+        Left = 262
+        Top = 48
+        Width = 121
+        Height = 23
+        TabOrder = 6
+        TextHint = 'T'#237'tulo'
+        OnChange = edtPesquisaTicketsTituloChange
+      end
+    end
+    object pnlDashboard: TPanel
+      Left = 4
+      Top = 26
+      Width = 843
+      Height = 432
+      Align = alClient
+      BevelOuter = bvNone
+      Color = clSkyBlue
+      ParentBackground = False
+      TabOrder = 0
+      object pnlHeaderCards: TPanel
+        Left = 0
+        Top = 0
+        Width = 843
+        Height = 150
+        Align = alTop
+        Color = clSkyBlue
+        ParentBackground = False
+        TabOrder = 0
+        object pnlCardAbertos: TPanel
+          Left = 21
+          Top = 24
+          Width = 200
+          Height = 100
+          BevelOuter = bvNone
+          Color = clWhite
+          ParentBackground = False
+          TabOrder = 0
+          object lblTituloAbertos: TLabel
+            Left = 0
+            Top = 0
+            Width = 200
+            Height = 25
+            Align = alTop
+            Alignment = taCenter
+            Caption = 'Chamados Abertos'
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -19
+            Font.Name = 'Segoe UI'
+            Font.Style = []
+            ParentFont = False
+            ExplicitWidth = 159
+          end
+          object lblValorAbertos: TLabel
+            Left = 0
+            Top = 36
+            Width = 201
+            Height = 54
+            Alignment = taCenter
+            AutoSize = False
+            Caption = '0'
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -40
+            Font.Name = 'Segoe UI'
+            Font.Style = []
+            ParentFont = False
+            Layout = tlCenter
+          end
+        end
+        object pnlCardConcluidos: TPanel
+          Left = 621
+          Top = 24
+          Width = 200
+          Height = 100
+          BevelOuter = bvNone
+          Color = clWhite
+          ParentBackground = False
+          TabOrder = 1
+          object lblTituloConcluidos: TLabel
+            Left = 0
+            Top = 0
+            Width = 200
+            Height = 25
+            Align = alTop
+            Alignment = taCenter
+            Caption = 'Chamados Conclu'#237'dos'
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -19
+            Font.Name = 'Segoe UI'
+            Font.Style = []
+            ParentFont = False
+            ExplicitWidth = 188
+          end
+          object lblValorConcluidos: TLabel
+            Left = 0
+            Top = 36
+            Width = 201
+            Height = 54
+            Alignment = taCenter
+            AutoSize = False
+            Caption = '0'
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -40
+            Font.Name = 'Segoe UI'
+            Font.Style = []
+            ParentFont = False
+            Layout = tlCenter
+          end
+        end
+        object pnlCardTotal: TPanel
+          Left = 325
+          Top = 24
+          Width = 200
+          Height = 100
+          BevelOuter = bvNone
+          Color = clWhite
+          ParentBackground = False
+          TabOrder = 2
+          object lblTituloTotal: TLabel
+            Left = 0
+            Top = 0
+            Width = 200
+            Height = 25
+            Align = alTop
+            Alignment = taCenter
+            Caption = 'Chamados Totais'
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -19
+            Font.Name = 'Segoe UI'
+            Font.Style = []
+            ParentFont = False
+            ExplicitWidth = 142
+          end
+          object lblValorTotal: TLabel
+            Left = 0
+            Top = 36
+            Width = 201
+            Height = 54
+            Alignment = taCenter
+            AutoSize = False
+            Caption = '0'
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -40
+            Font.Name = 'Segoe UI'
+            Font.Style = []
+            ParentFont = False
+            Layout = tlCenter
+          end
+        end
+      end
+      object chtModulos: TChart
+        Left = 0
+        Top = 150
+        Width = 425
+        Height = 282
+        Title.Text.Strings = (
+          'Chamados por M'#243'dulo')
+        View3D = False
+        View3DOptions.Elevation = 315
+        View3DOptions.Orthogonal = False
+        View3DOptions.Perspective = 0
+        View3DOptions.Rotation = 360
+        Color = clSkyBlue
+        TabOrder = 1
+        DefaultCanvas = 'TGDIPlusCanvas'
+        ColorPaletteIndex = 13
+        object Series1: TPieSeries
+          HoverElement = []
+          Marks.Visible = False
+          Marks.Tail.Margin = 2
+          XValues.Order = loAscending
+          YValues.Name = 'Pie'
+          YValues.Order = loNone
+          Frame.InnerBrush.BackColor = clRed
+          Frame.InnerBrush.Gradient.EndColor = clGray
+          Frame.InnerBrush.Gradient.MidColor = clWhite
+          Frame.InnerBrush.Gradient.StartColor = 4210752
+          Frame.InnerBrush.Gradient.Visible = True
+          Frame.MiddleBrush.BackColor = clYellow
+          Frame.MiddleBrush.Gradient.EndColor = 8553090
+          Frame.MiddleBrush.Gradient.MidColor = clWhite
+          Frame.MiddleBrush.Gradient.StartColor = clGray
+          Frame.MiddleBrush.Gradient.Visible = True
+          Frame.OuterBrush.BackColor = clGreen
+          Frame.OuterBrush.Gradient.EndColor = 4210752
+          Frame.OuterBrush.Gradient.MidColor = clWhite
+          Frame.OuterBrush.Gradient.StartColor = clSilver
+          Frame.OuterBrush.Gradient.Visible = True
+          Frame.Width = 4
+          OtherSlice.Legend.Visible = False
+        end
+      end
+      object chtAtendentes: TChart
+        Left = 422
+        Top = 150
+        Width = 427
+        Height = 283
+        Title.Text.Strings = (
+          'Tickets por Atendente')
+        View3D = False
+        Color = clSkyBlue
+        TabOrder = 2
+        DefaultCanvas = 'TGDIPlusCanvas'
+        ColorPaletteIndex = 13
+        object Series2: THorizBarSeries
+          HoverElement = []
+          BarBrush.Gradient.Direction = gdLeftRight
+          Gradient.Direction = gdLeftRight
+          XValues.Name = 'Bar'
+          XValues.Order = loNone
+          YValues.Name = 'Y'
+          YValues.Order = loAscending
+        end
+      end
+    end
+    object pnlNovoChamado: TPanel
+      Left = 4
+      Top = 26
+      Width = 843
+      Height = 432
+      Align = alClient
+      BevelOuter = bvNone
+      TabOrder = 2
+      Visible = False
+      ExplicitLeft = 320
+      ExplicitTop = 232
+      ExplicitWidth = 185
+      ExplicitHeight = 41
+    end
+  end
+end

@@ -36,6 +36,12 @@ type
     chtAtendentes: TChart;
     Series2: THorizBarSeries;
     pnlNovoChamado: TPanel;
+    edtTicketID: TEdit;
+    lblTicketID: TLabel;
+    edtTicketName: TEdit;
+    lblTicketName: TLabel;
+    cmbTicketModulo: TComboBox;
+    lblTicketModulo: TLabel;
     procedure btnRefreshClick(Sender: TObject);
     procedure DBGrid1DrawColumnCell(Sender: TObject; const Rect: TRect;
       DataCol: Integer; Column: TColumn; State: TGridDrawState);
@@ -49,6 +55,7 @@ type
   private
     { Private declarations }
     procedure AtualizarMetricasDashboard;
+    procedure CarregarSistemasComboBox;
   public
     { Public declarations }
   end;
@@ -130,6 +137,32 @@ begin
   dmConexao.qryTickets.Open;
 end;
 
+procedure TfrmPrincipal.CarregarSistemasComboBox;
+begin
+  dmConexao.qrySistemas.Close;
+  dmConexao.qrySistemas.SQL.Text := 'select sistema from sistemas order by sistema';
+
+  try
+    dmConexao.qrySistemas.Open;
+
+    cmbTicketModulo.Clear;
+
+    dmConexao.qrySistemas.First;
+    while not dmConexao.qrySistemas.Eof do
+      begin
+        cmbTicketModulo.Items.Add(dmConexao.qrySistemas.FieldByName('sistema').AsString);
+
+        dmConexao.qrySistemas.Next;
+      end;
+
+      if cmbTicketModulo.Items.Count > 0 then
+        cmbTicketModulo.ItemIndex := 0;
+  except 
+    on E: Exception do
+      ShowMessage('Erro ao carregar a lista de sistemas: ' + E.Message);
+  end;
+end;
+
 procedure TfrmPrincipal.DBGrid1DrawColumnCell(Sender: TObject;
   const Rect: TRect; DataCol: Integer; Column: TColumn;
   State: TGridDrawState);
@@ -184,6 +217,7 @@ end;
 procedure TfrmPrincipal.FormShow(Sender: TObject);
 begin
   AtualizarMetricasDashboard;
+  CarregarSistemasComboBox;
 end;
 
 procedure TfrmPrincipal.TabControl1Change(Sender: TObject);

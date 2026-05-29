@@ -16,6 +16,7 @@ type
     qryDashboard: TADOQuery;
     qryGrafico: TADOQuery;
     qryAtendentes: TADOQuery;
+    qrySistemas: TADOQuery;
   private
     { Private declarations }
   public
