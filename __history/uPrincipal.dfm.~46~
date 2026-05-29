@@ -23,7 +23,7 @@ object frmPrincipal: TfrmPrincipal
     Tabs.Strings = (
       'Vis'#227'o Geral'
       'Meus Chamados'
-      'Configura'#231#245'es')
+      'Novo Chamado')
     TabIndex = 0
     OnChange = TabControl1Change
     object pnlListaChamados: TPanel
@@ -309,7 +309,7 @@ object frmPrincipal: TfrmPrincipal
         Width = 425
         Height = 282
         Title.Text.Strings = (
-          'TChart')
+          'Chamados por M'#243'dulo')
         View3D = False
         View3DOptions.Elevation = 315
         View3DOptions.Orthogonal = False
@@ -345,13 +345,13 @@ object frmPrincipal: TfrmPrincipal
           OtherSlice.Legend.Visible = False
         end
       end
-      object chtResponsibles: TChart
+      object chtAtendentes: TChart
         Left = 422
         Top = 150
         Width = 427
         Height = 283
         Title.Text.Strings = (
-          'TChart')
+          'Tickets por Atendente')
         View3D = False
         Color = clSkyBlue
         TabOrder = 2
@@ -366,6 +366,160 @@ object frmPrincipal: TfrmPrincipal
           YValues.Name = 'Y'
           YValues.Order = loAscending
         end
+      end
+    end
+    object pnlNovoChamado: TPanel
+      Left = 4
+      Top = 26
+      Width = 843
+      Height = 432
+      Align = alClient
+      BevelOuter = bvNone
+      Color = clSkyBlue
+      ParentBackground = False
+      TabOrder = 2
+      Visible = False
+      object lblTicketID: TLabel
+        Left = 56
+        Top = 58
+        Width = 35
+        Height = 15
+        Caption = 'Ticket:'
+      end
+      object lblTicketName: TLabel
+        Left = 57
+        Top = 91
+        Width = 34
+        Height = 15
+        Caption = 'T'#237'tulo:'
+      end
+      object lblTicketModulo: TLabel
+        Left = 48
+        Top = 133
+        Width = 45
+        Height = 15
+        Caption = 'M'#243'dulo:'
+      end
+      object lblTicketPrioridade: TLabel
+        Left = 34
+        Top = 181
+        Width = 57
+        Height = 15
+        Caption = 'Prioridade:'
+      end
+      object lblTicketEmpresa: TLabel
+        Left = 43
+        Top = 221
+        Width = 48
+        Height = 15
+        Caption = 'Empresa:'
+      end
+      object lblTicketStatus: TLabel
+        Left = 56
+        Top = 259
+        Width = 35
+        Height = 15
+        Caption = 'Status:'
+      end
+      object lblTicketResponsavel: TLabel
+        Left = 25
+        Top = 299
+        Width = 68
+        Height = 15
+        Caption = 'Respons'#225'vel:'
+      end
+      object lblTicketDescrocap: TLabel
+        Left = 39
+        Top = 339
+        Width = 54
+        Height = 15
+        Caption = 'Descri'#231#227'o:'
+      end
+      object edtTicketID: TEdit
+        Left = 124
+        Top = 55
+        Width = 121
+        Height = 23
+        TabOrder = 0
+      end
+      object edtTicketName: TEdit
+        Left = 124
+        Top = 88
+        Width = 121
+        Height = 23
+        TabOrder = 1
+      end
+      object cmbTicketModulo: TComboBox
+        Left = 124
+        Top = 130
+        Width = 121
+        Height = 23
+        TabOrder = 2
+      end
+      object cmbTicketPrioridade: TComboBox
+        Left = 124
+        Top = 178
+        Width = 121
+        Height = 23
+        TabOrder = 3
+        Items.Strings = (
+          'Baixa'
+          'Normal'
+          'M'#233'dia'
+          'Alta'
+          'Urgente')
+      end
+      object edtTicketEmpresa: TEdit
+        Left = 124
+        Top = 218
+        Width = 121
+        Height = 23
+        TabOrder = 4
+      end
+      object cmbTicketStatus: TComboBox
+        Left = 124
+        Top = 256
+        Width = 121
+        Height = 23
+        TabOrder = 5
+        Items.Strings = (
+          'Aberto'#11
+          'Apoio'#11
+          'Transferido'#11
+          'Finalizado')
+      end
+      object cmbTicketResponsavel: TComboBox
+        Left = 124
+        Top = 296
+        Width = 121
+        Height = 23
+        TabOrder = 6
+        Items.Strings = (
+          'Ana'#11
+          'Arthur'#11
+          'Kelvin'#11
+          'Henrique'#11
+          'Guilherme'#11
+          'Fabiana')
+      end
+      object memTicketDescricao: TMemo
+        Left = 124
+        Top = 336
+        Width = 185
+        Height = 89
+        Lines.Strings = (
+          'memTicketDescricao')
+        ScrollBars = ssVertical
+        TabOrder = 7
+      end
+      object btnTicketSalvar: TButton
+        Left = 389
+        Top = 368
+        Width = 75
+        Height = 25
+        Caption = 'Salvar'
+        TabOrder = 8
+        OnClick = btnTicketSalvarClick
       end
     end
   end

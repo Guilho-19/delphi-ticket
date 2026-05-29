@@ -42,6 +42,17 @@ type
     lblTicketName: TLabel;
     cmbTicketModulo: TComboBox;
     lblTicketModulo: TLabel;
+    lblTicketPrioridade: TLabel;
+    cmbTicketPrioridade: TComboBox;
+    lblTicketEmpresa: TLabel;
+    edtTicketEmpresa: TEdit;
+    cmbTicketStatus: TComboBox;
+    lblTicketStatus: TLabel;
+    cmbTicketResponsavel: TComboBox;
+    lblTicketResponsavel: TLabel;
+    memTicketDescricao: TMemo;
+    lblTicketDescrocap: TLabel;
+    btnTicketSalvar: TButton;
     procedure btnRefreshClick(Sender: TObject);
     procedure DBGrid1DrawColumnCell(Sender: TObject; const Rect: TRect;
       DataCol: Integer; Column: TColumn; State: TGridDrawState);
@@ -52,6 +63,7 @@ type
     procedure edtPesquisaTicketsModuloChange(Sender: TObject);
     procedure TabControl1Change(Sender: TObject);
     procedure FormShow(Sender: TObject);
+    procedure btnTicketSalvarClick(Sender: TObject);
   private
     { Private declarations }
     procedure AtualizarMetricasDashboard;
@@ -135,6 +147,24 @@ procedure TfrmPrincipal.btnRefreshClick(Sender: TObject);
 begin
   dmConexao.qryTickets.SQL.Text := 'select id, responsible as Responsavel, title as Titulo, type as Modulo, requester as empresa, priority as Prioridade, columnId as Status, createdAt as Data from Tickets order by Modulo asc';
   dmConexao.qryTickets.Open;
+end;
+
+procedure TfrmPrincipal.btnTicketSalvarClick(Sender: TObject);
+begin
+  if Trim(edtTicketID.Text) = '' then
+  begin
+    ShowMessage('Por favor, insi´ra o número do Ticket!');
+    edtTicketID.SetFocus;
+    Exit;
+  end;
+
+  if Trim(edtTicketName.Text) = '' then
+  begin
+    ShowMessage('Por favor, insira o título do chamado!');
+    edtTicketName.SetFocus;
+    Exit;
+  end;
+
 end;
 
 procedure TfrmPrincipal.CarregarSistemasComboBox;

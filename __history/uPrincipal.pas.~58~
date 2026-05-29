@@ -35,6 +35,24 @@ type
     Series1: TPieSeries;
     chtAtendentes: TChart;
     Series2: THorizBarSeries;
+    pnlNovoChamado: TPanel;
+    edtTicketID: TEdit;
+    lblTicketID: TLabel;
+    edtTicketName: TEdit;
+    lblTicketName: TLabel;
+    cmbTicketModulo: TComboBox;
+    lblTicketModulo: TLabel;
+    lblTicketPrioridade: TLabel;
+    cmbTicketPrioridade: TComboBox;
+    lblTicketEmpresa: TLabel;
+    edtTicketEmpresa: TEdit;
+    cmbTicketStatus: TComboBox;
+    lblTicketStatus: TLabel;
+    cmbTicketResponsavel: TComboBox;
+    lblTicketResponsavel: TLabel;
+    memTicketDescricao: TMemo;
+    lblTicketDescrocap: TLabel;
+    btnTicketSalvar: TButton;
     procedure btnRefreshClick(Sender: TObject);
     procedure DBGrid1DrawColumnCell(Sender: TObject; const Rect: TRect;
       DataCol: Integer; Column: TColumn; State: TGridDrawState);
@@ -45,9 +63,11 @@ type
     procedure edtPesquisaTicketsModuloChange(Sender: TObject);
     procedure TabControl1Change(Sender: TObject);
     procedure FormShow(Sender: TObject);
+    procedure btnTicketSalvarClick(Sender: TObject);
   private
     { Private declarations }
     procedure AtualizarMetricasDashboard;
+    procedure CarregarSistemasComboBox;
   public
     { Public declarations }
   end;
@@ -100,7 +120,7 @@ begin
     end;
 
     dmConexao.qryAtendentes.Close;
-    dmConexao.qryAtendentes.SQL.Text := 'select responsible as Atendente, count(id) as Total from Tickets group by responsible order by Total desc';
+    dmConexao.qryAtendentes.SQL.Text := 'select responsible as Atendente, count(id) as Total from Tickets group by responsible order by Total asc';
     dmConexao.qryAtendentes.Open;
 
     chtAtendentes.Series[0].Clear;
@@ -117,11 +137,9 @@ begin
       dmConexao.qryAtendentes.Next;
     end;
 
-
-
     except
       on E: Exception do
-        ShowMessage('Erro ao carregar o gráfico: ' + E.Message);
+        ShowMessage('Erro ao carregar os gráficos: ' + E.Message);
   end;
 end;
 
@@ -129,6 +147,42 @@ procedure TfrmPrincipal.btnRefreshClick(Sender: TObject);
 begin
   dmConexao.qryTickets.SQL.Text := 'select id, responsible as Responsavel, title as Titulo, type as Modulo, requester as empresa, priority as Prioridade, columnId as Status, createdAt as Data from Tickets order by Modulo asc';
   dmConexao.qryTickets.Open;
+end;
+
+procedure TfrmPrincipal.btnTicketSalvarClick(Sender: TObject);
+begin
+  if Trim(edtTicketID.Text = '' then
+  begin
+    ShowMessage('Por favor, insi´ra o número do Ticket!');
+    edtTicketID.SetFocus;
+  end;
+
+end;
+
+procedure TfrmPrincipal.CarregarSistemasComboBox;
+begin
+  dmConexao.qrySistemas.Close;
+  dmConexao.qrySistemas.SQL.Text := 'select sistema from sistemas order by sistema';
+
+  try
+    dmConexao.qrySistemas.Open;
+
+    cmbTicketModulo.Clear;
+
+    dmConexao.qrySistemas.First;
+    while not dmConexao.qrySistemas.Eof do
+      begin
+        cmbTicketModulo.Items.Add(dmConexao.qrySistemas.FieldByName('sistema').AsString);
+
+        dmConexao.qrySistemas.Next;
+      end;
+
+      if cmbTicketModulo.Items.Count > 0 then
+        cmbTicketModulo.ItemIndex := 0;
+  except 
+    on E: Exception do
+      ShowMessage('Erro ao carregar a lista de sistemas: ' + E.Message);
+  end;
 end;
 
 procedure TfrmPrincipal.DBGrid1DrawColumnCell(Sender: TObject;
@@ -185,12 +239,14 @@ end;
 procedure TfrmPrincipal.FormShow(Sender: TObject);
 begin
   AtualizarMetricasDashboard;
+  CarregarSistemasComboBox;
 end;
 
 procedure TfrmPrincipal.TabControl1Change(Sender: TObject);
 begin
   pnlDashboard.Visible := (TabControl1.TabIndex = 0);
   pnlListaChamados.Visible := (TabControl1.TabIndex = 1);
+  pnlNovoChamado.Visible := (TabControl1.TabIndex = 2);
 
   if TabControl1.TabIndex = 0 then
   begin
