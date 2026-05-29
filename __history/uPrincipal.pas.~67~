@@ -42,6 +42,17 @@ type
     lblTicketName: TLabel;
     cmbTicketModulo: TComboBox;
     lblTicketModulo: TLabel;
+    lblTicketPrioridade: TLabel;
+    cmbTicketPrioridade: TComboBox;
+    lblTicketEmpresa: TLabel;
+    edtTicketEmpresa: TEdit;
+    cmbTicketStatus: TComboBox;
+    lblTicketStatus: TLabel;
+    cmbTicketResponsavel: TComboBox;
+    lblTicketResponsavel: TLabel;
+    memTicketDescricao: TMemo;
+    lblTicketDescrocap: TLabel;
+    btnTicketSalvar: TButton;
     procedure btnRefreshClick(Sender: TObject);
     procedure DBGrid1DrawColumnCell(Sender: TObject; const Rect: TRect;
       DataCol: Integer; Column: TColumn; State: TGridDrawState);
@@ -52,6 +63,7 @@ type
     procedure edtPesquisaTicketsModuloChange(Sender: TObject);
     procedure TabControl1Change(Sender: TObject);
     procedure FormShow(Sender: TObject);
+    procedure btnTicketSalvarClick(Sender: TObject);
   private
     { Private declarations }
     procedure AtualizarMetricasDashboard;
@@ -137,10 +149,89 @@ begin
   dmConexao.qryTickets.Open;
 end;
 
+procedure TfrmPrincipal.btnTicketSalvarClick(Sender: TObject);
+begin
+  if Trim(edtTicketID.Text) = '' then
+  begin
+    ShowMessage('Por favor, insi´ra o número do Ticket!');
+    edtTicketID.SetFocus;
+    Exit;
+  end;
+
+  if Trim(edtTicketName.Text) = '' then
+  begin
+    ShowMessage('Por favor, insira o título do chamado!');
+    edtTicketName.SetFocus;
+    Exit;
+  end;
+
+  dmConexao.qryExec.Close;
+  dmConexao.qryExec.SQL.CLear;
+  dmConexao.qryExec.SQL.Add('insert into Tickets (id, title, priority, type, requester, columnId, createdAt, createdBy, description, responsible))');
+  dmConexao.qryExec.SQL.Add('values (:pId, :pTitle, :pPriority, :pType, :pRequester, :pColumnId, :pCreatedAt, :pCreatedBy, :pDescription, :pResponsible)');
+
+  dmConexao.qryExec.Parameters.ParamByName('pId').Value := StrToInt(Trim(edtTicketID.Text));
+  dmConexao.qryExec.Parameters.ParamByName('pTitle').Value := Trim(edtTicketName.Text);
+  dmConexao.qryExec.Parameters.ParamByName('pPriority').Value := cmbTicketPrioridade.Text;
+  dmConexao.qryExec.Parameters.ParamByName('pType').Value := cmbTicketModulo.Text;
+  dmConexao.qryExec.Parameters.ParamByName('pRequester').Value := Trim(edtTicketEmpresa.Text);
+  dmConexao.qryExec.Parameters.ParamByName('pColumnId').Value := cmbTicketStatus.Text;
+  dmConexao.qryExec.Parameters.ParamByName('pResponsible').Value := cmbTicketResponsavel.Text;
+  dmConexao.qryExec.Parameters.ParamByName('pDescription').Value := memTicketDescricao.Text;
+  dmConexao.qryExec.Parameters.ParamByName('pCreatedAt').Value := Now;
+  dmConexao.qryExec.Parameters.ParamByName('pCreatedBy').Value := 1;
+
+  try
+    dmConexao.qryExec.ExecSQL;
+
+    ShowMessage('Chamado registrado com sucesso!');
+
+    edtTicketID.Clear;
+    edtTicketName.Clear;
+    edtTicketEmpresa.CLear;
+    memTicketDescricao.Clear;
+    if cmbTicketPrioridade.Items.Count > 0 then cmbTicketPrioridade.ItemIndex := 0;
+    if cmbTicketModulo.Items.Count > 0 then cmbTicketModulo.ItemIndex := 0;
+    if cmbTicketStatus.Items.Count > 0 then cmbTicketStatus.ItemIndex := 0;
+    if cmbTicketResponsavel.Items.Count > 0 then cmbTicketResponsavel.ItemIndex := 0;
+
+    TabControl1.TabIndex := 0;
+    TabControl1Change(Self);
+
+
+
+
+  finally
+
+  end;
+
+
+end;
+
 procedure TfrmPrincipal.CarregarSistemasComboBox;
 begin
   dmConexao.qrySistemas.Close;
   dmConexao.qrySistemas.SQL.Text := 'select sistema from sistemas order by sistema';
+
+  try
+    dmConexao.qrySistemas.Open;
+
+    cmbTicketModulo.Clear;
+
+    dmConexao.qrySistemas.First;
+    while not dmConexao.qrySistemas.Eof do
+      begin
+        cmbTicketModulo.Items.Add(dmConexao.qrySistemas.FieldByName('sistema').AsString);
+
+        dmConexao.qrySistemas.Next;
+      end;
+
+      if cmbTicketModulo.Items.Count > 0 then
+        cmbTicketModulo.ItemIndex := 0;
+  except 
+    on E: Exception do
+      ShowMessage('Erro ao carregar a lista de sistemas: ' + E.Message);
+  end;
 end;
 
 procedure TfrmPrincipal.DBGrid1DrawColumnCell(Sender: TObject;
@@ -197,6 +288,7 @@ end;
 procedure TfrmPrincipal.FormShow(Sender: TObject);
 begin
   AtualizarMetricasDashboard;
+  CarregarSistemasComboBox;
 end;
 
 procedure TfrmPrincipal.TabControl1Change(Sender: TObject);

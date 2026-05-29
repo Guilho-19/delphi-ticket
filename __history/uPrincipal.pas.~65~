@@ -151,11 +151,51 @@ end;
 
 procedure TfrmPrincipal.btnTicketSalvarClick(Sender: TObject);
 begin
-  if Trim(edtTicketID.Text = '' then
+  if Trim(edtTicketID.Text) = '' then
   begin
     ShowMessage('Por favor, insi´ra o número do Ticket!');
     edtTicketID.SetFocus;
+    Exit;
   end;
+
+  if Trim(edtTicketName.Text) = '' then
+  begin
+    ShowMessage('Por favor, insira o título do chamado!');
+    edtTicketName.SetFocus;
+    Exit;
+  end;
+
+  dmConexao.qryExec.Close;
+  dmConexao.qryExec.SQL.CLear;
+  dmConexao.qryExec.SQL.Add('insert into Tickets (id, title, priority, type, requester, columnId, createdAt, createdBy, description, responsible))');
+  dmConexao.qryExec.SQL.Add('values (:pId, :pTitle, :pPriority, :pType, :pRequester, :pColumnId, :pCreatedAt, :pCreatedBy, :pDescription, :pResponsible)');
+
+  dmConexao.qryExec.Parameters.ParamByName('pId').Value := StrToInt(Trim(edtTicketID.Text));
+  dmConexao.qryExec.Parameters.ParamByName('pTitle').Value := Trim(edtTicketName.Text);
+  dmConexao.qryExec.Parameters.ParamByName('pPriority').Value := cmbTicketPrioridade.Text;
+  dmConexao.qryExec.Parameters.ParamByName('pType').Value := cmbTicketModulo.Text;
+  dmConexao.qryExec.Parameters.ParamByName('pRequester').Value := Trim(edtTicketEmpresa.Text);
+  dmConexao.qryExec.Parameters.ParamByName('pColumnId').Value := cmbTicketStatus.Text;
+  dmConexao.qryExec.Parameters.ParamByName('pResponsible').Value := cmbTicketResponsavel.Text;
+  dmConexao.qryExec.Parameters.ParamByName('pDescription').Value := memTicketDescricao.Text;
+  dmConexao.qryExec.Parameters.ParamByName('pCreatedAt').Value := Now;
+  dmConexao.qryExec.Parameters.ParamByName('pCreatedBy').Value := 1;
+
+  try
+    dmConexao.qryExec.ExecSQL;
+
+    ShowMessage('Chamado registrado com sucesso!');
+
+    edtTicketID.Clear;
+    edtTicketName.Clear;
+    edtTicketEmpresa.CLear;
+    memTicketDescricao.Clear;
+
+
+  finally
+
+  end;
+
 
 end;
 

@@ -165,6 +165,45 @@ begin
     Exit;
   end;
 
+  dmConexao.qryExec.Close;
+  dmConexao.qryExec.SQL.CLear;
+  dmConexao.qryExec.SQL.Add('insert into Tickets (id, title, priority, type, requester, columnId, createdAt, createdBy, description, responsible)');
+  dmConexao.qryExec.SQL.Add('values (:pId, :pTitle, :pPriority, :pType, :pRequester, :pColumnId, :pCreatedAt, :pCreatedBy, :pDescription, :pResponsible)');
+
+  dmConexao.qryExec.Parameters.ParamByName('pId').Value := StrToInt(Trim(edtTicketID.Text));
+  dmConexao.qryExec.Parameters.ParamByName('pTitle').Value := Trim(edtTicketName.Text);
+  dmConexao.qryExec.Parameters.ParamByName('pPriority').Value := cmbTicketPrioridade.Text;
+  dmConexao.qryExec.Parameters.ParamByName('pType').Value := cmbTicketModulo.Text;
+  dmConexao.qryExec.Parameters.ParamByName('pRequester').Value := Trim(edtTicketEmpresa.Text);
+  dmConexao.qryExec.Parameters.ParamByName('pColumnId').Value := cmbTicketStatus.Text;
+  dmConexao.qryExec.Parameters.ParamByName('pResponsible').Value := cmbTicketResponsavel.Text;
+  dmConexao.qryExec.Parameters.ParamByName('pDescription').Value := memTicketDescricao.Text;
+  dmConexao.qryExec.Parameters.ParamByName('pCreatedAt').Value := Now;
+  dmConexao.qryExec.Parameters.ParamByName('pCreatedBy').Value := 1;
+
+  try
+    dmConexao.qryExec.ExecSQL;
+
+    ShowMessage('Chamado registrado com sucesso!');
+
+    edtTicketID.Clear;
+    edtTicketName.Clear;
+    edtTicketEmpresa.CLear;
+    memTicketDescricao.Clear;
+    if cmbTicketPrioridade.Items.Count > 0 then cmbTicketPrioridade.ItemIndex := 0;
+    if cmbTicketModulo.Items.Count > 0 then cmbTicketModulo.ItemIndex := 0;
+    if cmbTicketStatus.Items.Count > 0 then cmbTicketStatus.ItemIndex := 0;
+    if cmbTicketResponsavel.Items.Count > 0 then cmbTicketResponsavel.ItemIndex := 0;
+
+    TabControl1.TabIndex := 0;
+    TabControl1Change(Self);
+
+    except
+      on E: Exception do
+      begin
+        ShowMessage('Erro ao registrar o chamado no banco: ' + E.Message);
+      end;
+  end;
 end;
 
 procedure TfrmPrincipal.CarregarSistemasComboBox;
